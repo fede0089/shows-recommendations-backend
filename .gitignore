@@ -1,3 +1,26 @@
+### Application ###
+
+.localstack
+
+### Intellij ###
+
+.idea
+*.iml
+.idea_modules
+
+### MacOS ###
+
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+### Gradle ###
+
+.gradle
+/buildTool/
+build
+gradle
+
 # Compiled class file
 *.class
 
