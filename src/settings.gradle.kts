@@ -1,3 +1,3 @@
 
-rootProject.name = "movies-recommendations"
+rootProject.name = "shows-recommendations-backend"
 

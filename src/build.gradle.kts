@@ -32,5 +32,5 @@ tasks.withType<KotlinCompile>() {
 }
 
 application {
-    mainClassName = "com.moviesrecommendations.application.ServerKt"
+    mainClassName = "com.showsrecommendations.application.ServerKt"
 }
