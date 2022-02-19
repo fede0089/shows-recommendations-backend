@@ -8,8 +8,8 @@ data class RecommendedShowDTO (val title:String,
                                val year:String,
                                val cover:String,
                                val type:String,
-                               val recommendationsQty:Int,
-                               val unrecommendationsQty: Int){
+                               val positiveReviewsQty:Int,
+                               val negativeReviewsQty: Int){
 
     companion object {
         fun from(recommendation: Recommendation, show: Show): RecommendedShowDTO =
@@ -19,8 +19,8 @@ data class RecommendedShowDTO (val title:String,
                 year = show.year,
                 cover = show.cover,
                 type = show.type,
-                recommendationsQty = recommendation.recommendationsQty,
-                unrecommendationsQty = recommendation.unrecommendationsQty
+                positiveReviewsQty = recommendation.positiveReviewsQty,
+                negativeReviewsQty = recommendation.negativeReviewsQty
                 )
     }
 

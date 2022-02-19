@@ -37,10 +37,10 @@ fun buildRecommendationsController(): RecommendationsController{
 
     val recommendationsRepository = RecommendationsRepositoryInMemory()
     recommendationsRepository["user1"] = listOf(
-        Recommendation(showId = "MovieI", recommendationsQty = 4, unrecommendationsQty = 0),
-        Recommendation(showId = "MovieIII", recommendationsQty = 4, unrecommendationsQty = 1),
-        Recommendation(showId = "MovieV", recommendationsQty = 1, unrecommendationsQty = 1),
-        Recommendation(showId = "MovieVI", recommendationsQty = 1, unrecommendationsQty = 0)
+        Recommendation(showId = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0),
+        Recommendation(showId = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1),
+        Recommendation(showId = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1),
+        Recommendation(showId = "MovieVI", positiveReviewsQty = 1, negativeReviewsQty = 0)
     )
 
     //FIXME if show is not found, it crashes

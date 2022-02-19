@@ -10,6 +10,6 @@ class GetRecommendations(private val recommendationsRepository: RecommendationsR
         val seenShows = reviewsRepository.getReviews(userId).map { it.showId }
         return recommendationsRepository.getRecommendations(userId = userId)
             .filterNot { it.showId in seenShows }
-            .sortedBy { it.unrecommendationsQty - it.recommendationsQty }
+            .sortedBy { it.negativeReviewsQty - it.positiveReviewsQty }
     }
 }

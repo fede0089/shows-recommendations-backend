@@ -12,7 +12,7 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 class CalculateAndGetRecommendationsTest: Spek({
 
-    Feature("CalculateAndGetRecommendations") {
+    Feature("2.1 CalculateAndGetRecommendations") {
 
         val reviewsRepository = ReviewsRepositoryInMemory()
         val usersRepository = UsersRepositoryInMemory()
@@ -86,9 +86,9 @@ class CalculateAndGetRecommendationsTest: Spek({
             Then("user1 sees Movie I with 4 recommendations, Movie III with 4 recommendations and 1 un-recommendation and Movie V with 1 recommendation and 1 un-recommendation"){
                 assertEquals(3, recommendedShows.size)
                 assertEquals(recommendedShows, listOf(
-                    Recommendation(showId = "MovieI", recommendationsQty = 4, unrecommendationsQty = 0),
-                    Recommendation(showId = "MovieIII", recommendationsQty = 4, unrecommendationsQty = 1),
-                    Recommendation(showId = "MovieV", recommendationsQty = 1, unrecommendationsQty = 1)
+                    Recommendation(showId = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0),
+                    Recommendation(showId = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1),
+                    Recommendation(showId = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1)
                 ))
             }
         }

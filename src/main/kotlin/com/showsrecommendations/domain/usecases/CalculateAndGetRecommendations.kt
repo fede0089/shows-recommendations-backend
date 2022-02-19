@@ -2,7 +2,6 @@ package com.showsrecommendations.domain.usecases
 
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
-import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.UsersRepository
 
@@ -19,16 +18,16 @@ class CalculateAndGetRecommendations(private val usersRepository: UsersRepositor
             .groupBy {review: Review -> review.showId}
             .map { (showId, reviews) ->
 
-                val recommendationsQty = reviews.count { review: Review -> review.rating == 1f }
-                val unrecommendationsQty = reviews.count() - recommendationsQty
+                val positiveReviewsQty = reviews.count { review: Review -> review.rating == 1f }
+                val negativeReviewsQty = reviews.count() - positiveReviewsQty
 
                 Recommendation(showId = showId,
-                    recommendationsQty = recommendationsQty,
-                    unrecommendationsQty = unrecommendationsQty)
+                    positiveReviewsQty = positiveReviewsQty,
+                    negativeReviewsQty = negativeReviewsQty)
         }
 
         return followedUsersRecommendations
-            .sortedBy {recommendation-> recommendation.unrecommendationsQty - recommendation.recommendationsQty}
+            .sortedBy {recommendation-> recommendation.negativeReviewsQty - recommendation.positiveReviewsQty}
             .filterNot{recommendation -> recommendation.showId in seenShows}
     }
 }
