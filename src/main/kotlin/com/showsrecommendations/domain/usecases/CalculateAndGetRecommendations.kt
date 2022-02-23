@@ -5,11 +5,12 @@ import com.showsrecommendations.domain.entities.Review
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.UsersRepository
 
-class CalculateAndGetRecommendations(private val usersRepository: UsersRepository, private val reviewsRepository: ReviewsRepository) {
+class CalculateAndGetRecommendations(private val usersRepository: UsersRepository,
+                                     private val reviewsRepository: ReviewsRepository): UseCase<String, List<Recommendation>> {
 
-    operator fun invoke(userId: String): List<Recommendation> {
+    override operator fun invoke(userId: String): List<Recommendation> {
 
-        val seenShows = reviewsRepository.getReviews(userId).map {it.showId}
+        val seenShowsIds = reviewsRepository.getReviews(userId).map {it.showId}
 
         val followedUsersReviews = usersRepository.getFollowedUsers(userId).
             flatMap{followedUser -> reviewsRepository.getReviews(followedUser.id)}
@@ -28,6 +29,6 @@ class CalculateAndGetRecommendations(private val usersRepository: UsersRepositor
 
         return followedUsersRecommendations
             .sortedBy {recommendation-> recommendation.negativeReviewsQty - recommendation.positiveReviewsQty}
-            .filterNot{recommendation -> recommendation.showId in seenShows}
+            .filterNot{recommendation -> recommendation.showId in seenShowsIds}
     }
 }

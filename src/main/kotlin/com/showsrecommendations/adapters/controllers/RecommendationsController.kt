@@ -13,5 +13,4 @@ class RecommendationsController(private val getRecommendations: GetRecommendatio
                 val recommendedShow: Show = getShow(recommendation.showId)
                 RecommendedShowDTO.from(recommendation = recommendation, show = recommendedShow)
             }
-
 }
