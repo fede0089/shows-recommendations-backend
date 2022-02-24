@@ -36,7 +36,7 @@ class GetRecommendationsTest: Spek({
             }
 
             And("one of them was already reviewed by user1"){
-                reviewsRepository["user1"] = listOf(Review(showId = "MovieVI", rating = 1f, createdDate = "20220218", lastUpdated = "20220218"))
+                reviewsRepository["user1"] = mutableListOf(Review(showId = "MovieVI", rating = 1f, createdDate = "20220218"))
             }
 
             When("user1 gets its recommendations") {

@@ -9,6 +9,8 @@ group = "federico.mete"
 version = "1.0"
 
 val spekVersion = "2.0.17"
+val mockkVersion = "1.12.2"
+var logbackVersion = "1.2.10"
 
 repositories {
     jcenter()
@@ -31,6 +33,12 @@ dependencies {
     implementation("io.ktor:ktor-html-builder:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
     implementation("com.google.code.gson:gson:2.8.5")
+
+    implementation("io.mockk:mockk:$mockkVersion")
+
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
+
+
 }
 
 
