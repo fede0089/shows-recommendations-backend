@@ -2,17 +2,17 @@ package com.showsrecommendations.domain.usecases
 
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
+import com.showsrecommendations.domain.ports.FollowedUsersRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
-import com.showsrecommendations.domain.ports.UsersRepository
 
-class CalculateAndGetRecommendations(private val usersRepository: UsersRepository,
+class CalculateAndGetRecommendations(private val followedUsersRepository: FollowedUsersRepository,
                                      private val reviewsRepository: ReviewsRepository): UseCase<String, List<Recommendation>> {
 
     override operator fun invoke(userId: String): List<Recommendation> {
 
         val seenShowsIds = reviewsRepository.getReviews(userId).map {it.showId}
 
-        val followedUsersReviews = usersRepository.getFollowedUsers(userId).
+        val followedUsersReviews = followedUsersRepository.getFollowedUsers(userId).
             flatMap{followedUser -> reviewsRepository.getReviews(followedUser.id)}
 
         val followedUsersRecommendations = followedUsersReviews

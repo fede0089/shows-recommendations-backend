@@ -3,18 +3,17 @@ package com.showsrecommendations.application
 import com.google.gson.Gson
 import com.showsrecommendations.adapters.controllers.RecommendationsController
 import com.showsrecommendations.adapters.controllers.ReviewController
-import com.showsrecommendations.adapters.repositories.inmemory.RecommendationsRepositoryInMemory
-import com.showsrecommendations.adapters.repositories.inmemory.ReviewsRepositoryInMemory
-import com.showsrecommendations.adapters.repositories.inmemory.ShowsRepositoryInMemory
+import com.showsrecommendations.adapters.controllers.FollowedUsersController
+import com.showsrecommendations.adapters.repositories.inmemory.*
+import com.showsrecommendations.domain.entities.FollowedUser
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
 import com.showsrecommendations.domain.entities.Show
+import com.showsrecommendations.domain.ports.FollowedUsersRepository
 import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.ShowsRepository
-import com.showsrecommendations.domain.usecases.AddReview
-import com.showsrecommendations.domain.usecases.GetRecommendations
-import com.showsrecommendations.domain.usecases.GetShow
+import com.showsrecommendations.domain.usecases.*
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
@@ -29,17 +28,24 @@ fun main() {
     val recommendationsRepository = buildRecommendationsRepository()
     val reviewsRepository = buildReviewsRepository()
     val showsRepository = buildShowsRepository()
+    val followedUsersRepository = buildUsersRepository()
 
     //use cases
     val getRecommendations = GetRecommendations(
         recommendationsRepository= recommendationsRepository,
         reviewsRepository = reviewsRepository)
+    val calculateAndGetRecommendations = CalculateAndGetRecommendations(
+        followedUsersRepository = followedUsersRepository,
+        reviewsRepository = reviewsRepository
+    )
     val getShow = GetShow(showsRepository = showsRepository)
     val addReview = AddReview(reviewsRepository = reviewsRepository)
+    val followUser = FollowUser(followedUsersRepository = followedUsersRepository)
 
     //controllers
-    val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, getShow = getShow)
+    val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, getShow = getShow, calculateAndGetRecommendations = calculateAndGetRecommendations)
     val reviewController = ReviewController(addReview = addReview)
+    val followedUsersController = FollowedUsersController(followUser = followUser)
 
     embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
 
@@ -52,10 +58,12 @@ fun main() {
 
         routing {
 
-            get("/{userId}/shows/recommended") {
+            post("/{userId}/circle/{followedUserId}") {
                 val userId = call.parameters["userId"]!!
-                val recommendedShows = recommendationsController.getRecommendedShows(userId)
-                call.respondText(Gson().toJson(recommendedShows))
+                val followedUserId = call.parameters["followedUserId"]!!
+                val followUserRequest = FollowUser.Request(userId = userId, followedUserId = followedUserId)
+                val followUserResponse = followedUsersController.followUser(followUserRequest)
+                call.respondText(Gson().toJson(followUserResponse))
             }
 
             post("/{userId}/shows/{showId}/review/{rating}") {
@@ -70,22 +78,57 @@ fun main() {
                 call.respondText(Gson().toJson(addReviewResponse))
             }
 
+            get("/{userId}/shows/recommended") {
+                val userId = call.parameters["userId"]!!
+                val recommendedShows = recommendationsController.calculateAndGetRecommendedShows(userId)
+                call.respondText(Gson().toJson(recommendedShows))
+            }
+
+            get("/{userId}/shows/recommended-preloaded") {
+                val userId = call.parameters["userId"]!!
+                val recommendedShows = recommendationsController.getRecommendedShows(userId)
+                call.respondText(Gson().toJson(recommendedShows))
+            }
+
         }
     }.start(wait = true)
 }
 
+fun buildUsersRepository(): FollowedUsersRepository {
+    val followedUsersRepository =  FollowedUsersRepositoryInMemory()
+    followedUsersRepository["user1"] = mutableListOf(
+        FollowedUser(id = "user2", followedDate = "20220210")
+    )
+    return followedUsersRepository
+}
+
 fun buildReviewsRepository(): ReviewsRepository {
+
     val reviewsRepository = ReviewsRepositoryInMemory()
-    reviewsRepository["user1"] = mutableListOf(Review(showId = "MovieVI", rating = 1f, createdDate = "20220218"))
+
+    reviewsRepository["user1"] = mutableListOf(
+        Review(showId = "MovieVI", rating = 1f, createdDate = "20220218")
+    )
+    reviewsRepository["user2"] = mutableListOf(
+        Review(showId = "MovieI", rating = 1f, createdDate = "20220218"),
+        Review(showId = "MovieIII", rating = 1f, createdDate = "20220218"),
+        Review(showId = "MovieV", rating = 0f, createdDate = "20220218"),
+        Review(showId = "MovieVI", rating = 1f, createdDate = "20220218")
+    )
+    reviewsRepository["user3"] = mutableListOf(
+        Review(showId = "MovieI", rating = 1f, createdDate = "20220218"),
+        Review(showId = "MovieVI", rating = 1f, createdDate = "20220218")
+    )
+
     return reviewsRepository
 }
 
 fun buildRecommendationsRepository(): RecommendationsRepository {
     val recommendationsRepository = RecommendationsRepositoryInMemory()
     recommendationsRepository["user1"] = listOf(
-        Recommendation(showId = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0),
-        Recommendation(showId = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1),
-        Recommendation(showId = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1),
+        Recommendation(showId = "MovieI", positiveReviewsQty = 1, negativeReviewsQty = 0),
+        Recommendation(showId = "MovieIII", positiveReviewsQty = 1, negativeReviewsQty = 1),
+        Recommendation(showId = "MovieV", positiveReviewsQty = 0, negativeReviewsQty = 1),
         Recommendation(showId = "MovieVI", positiveReviewsQty = 1, negativeReviewsQty = 0)
     )
     return recommendationsRepository

@@ -1,12 +1,10 @@
 package com.showsrecommendations.domain.usecases
 
-import com.showsrecommendations.adapters.repositories.inmemory.ReviewsRepositoryInMemory
-import com.showsrecommendations.adapters.repositories.inmemory.UsersRepositoryInMemory
 import com.showsrecommendations.domain.entities.FollowedUser
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
+import com.showsrecommendations.domain.ports.FollowedUsersRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
-import com.showsrecommendations.domain.ports.UsersRepository
 import io.mockk.every
 import io.mockk.mockk
 
@@ -19,10 +17,10 @@ class CalculateAndGetRecommendationsTest : Spek({
     Feature("2.1 CalculateAndGetRecommendations") {
 
         val reviewsRepository = mockk<ReviewsRepository>(relaxed = true)
-        val usersRepository = mockk<UsersRepository>(relaxed = true)
+        val followedUsersRepository = mockk<FollowedUsersRepository>(relaxed = true)
 
         val calculateAndGetRecommendations = CalculateAndGetRecommendations(
-            usersRepository = usersRepository,
+            followedUsersRepository = followedUsersRepository,
             reviewsRepository = reviewsRepository
         )
 
@@ -32,7 +30,7 @@ class CalculateAndGetRecommendationsTest : Spek({
 
             Given("user1 that is following user2, user3, user4, user5 and user6 ") {
                 every {
-                    usersRepository.getFollowedUsers(userId = "user1")
+                    followedUsersRepository.getFollowedUsers(userId = "user1")
                 } returns listOf(
                     FollowedUser(id = "user2", followedDate = "20220218"),
                     FollowedUser(id = "user3", followedDate = "20220218"),
