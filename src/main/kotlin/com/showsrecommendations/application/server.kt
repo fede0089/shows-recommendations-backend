@@ -14,13 +14,16 @@ import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.ShowsRepository
 import com.showsrecommendations.domain.usecases.*
-import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.server.engine.embeddedServer
-import io.ktor.server.netty.Netty
+import io.ktor.serialization.gson.*
+import io.ktor.server.application.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+import io.ktor.server.plugins.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 fun main() {
 
@@ -51,9 +54,13 @@ fun main() {
 
         //plugins
         install(StatusPages) {
-            exception<BadRequestException> { cause ->
+            exception<BadRequestException>{ call, cause ->
                 call.respond(HttpStatusCode.BadRequest, Gson().toJson(cause))
             }
+        }
+
+        install(ContentNegotiation) {
+            gson()
         }
 
         routing {

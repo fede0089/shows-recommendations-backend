@@ -1,8 +1,6 @@
 package com.showsrecommendations.domain.usecases
-
-import com.showsrecommendations.domain.entities.FollowedUser
 import com.showsrecommendations.domain.ports.FollowedUsersRepository
-import io.ktor.features.*
+import io.ktor.server.plugins.*
 
 class FollowUser(private val followedUsersRepository: FollowedUsersRepository): UseCase<FollowUser.Request, FollowUser.Response> {
 

@@ -1,7 +1,7 @@
 package com.showsrecommendations.domain.usecases
 
 import com.showsrecommendations.domain.ports.ReviewsRepository
-import io.ktor.features.*
+import io.ktor.server.plugins.*
 
 class AddReview(private val reviewsRepository: ReviewsRepository): UseCase<AddReview.Request, AddReview.Response>{
 
