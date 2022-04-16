@@ -1,0 +1,285 @@
+{
+	"info": {
+		"_postman_id": "25628de6-beba-40bb-b44d-e701e0a3ae91",
+		"name": "Shows Recommendations Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add Review",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"shows",
+						":showId",
+						"review",
+						":rating"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "user3",
+							"description": "User id"
+						},
+						{
+							"key": "showId",
+							"value": "MovieV",
+							"description": "Show id"
+						},
+						{
+							"key": "rating",
+							"value": "1",
+							"description": "Review's rating (0: Negative, 1:Positive)"
+						}
+					]
+				},
+				"description": "Add a user review of a show"
+			},
+			"response": [
+				{
+					"name": "Add Review",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"shows",
+								":showId",
+								"review",
+								":rating"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "User1",
+									"description": "User identifier"
+								},
+								{
+									"key": "showId",
+									"value": "MovieV",
+									"description": "Show idenifier"
+								},
+								{
+									"key": "rating",
+									"value": "1",
+									"description": "Show's rating (0 > Negative, 1> Positive) "
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "49"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=UTF-8"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": \"user3\",\n    \"showId\": \"MovieV\",\n    \"rating\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "Follow User",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"followedUsers",
+						":followedUserId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "user1",
+							"description": "User id"
+						},
+						{
+							"key": "followedUserId",
+							"value": "user3",
+							"description": "Id of the followed user "
+						}
+					]
+				},
+				"description": "Follow a user"
+			},
+			"response": []
+		},
+		{
+			"name": "Calculate And Get Recomemndations",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/:userId/shows/recommended",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"shows",
+						"recommended"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "user1",
+							"description": "User id"
+						}
+					]
+				},
+				"description": "Get user's recommended shows based on her/his circle"
+			},
+			"response": [
+				{
+					"name": "Calculate And Get Recomemndations",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/:userId/shows/recommended",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"shows",
+								"recommended"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "",
+									"description": "User id"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "401"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=UTF-8"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "[{\"title\":\"Movie I\",\"genre\":\"Action\",\"year\":\"2022\",\"cover\":\"cover.jpg\",\"type\":\"MOVIE\",\"positiveReviewsQty\":2,\"negativeReviewsQty\":0},{\"title\":\"Movie III\",\"genre\":\"Suspense\",\"year\":\"2022\",\"cover\":\"cover.jpg\",\"type\":\"MOVIE\",\"positiveReviewsQty\":1,\"negativeReviewsQty\":0},{\"title\":\"Movie V\",\"genre\":\"Horror\",\"year\":\"2012\",\"cover\":\"cover.jpg\",\"type\":\"MOVIE\",\"positiveReviewsQty\":0,\"negativeReviewsQty\":1}]"
+				}
+			]
+		},
+		{
+			"name": "Get Recomemndations",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/:userId/shows/recommended-preloaded",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"shows",
+						"recommended-preloaded"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "user1",
+							"description": "User Id"
+						}
+					]
+				},
+				"description": "Get user's recommended shows based on her/his circle"
+			},
+			"response": []
+		}
+	]
+}

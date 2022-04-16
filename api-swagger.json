@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: Shows Recommendations Backend
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /{userId}/shows/{showId}/review/{rating}:
+    post:
+      tags:
+        - default
+      summary: Add Review
+      description: Add a user review of a show
+      requestBody:
+        content: {}
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: User id
+          example: user3
+        - name: showId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: Show id
+          example: MovieV
+        - name: rating
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: 'Review''s rating (0: Negative, 1:Positive)'
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '49'
+            Content-Type:
+              schema:
+                type: string
+                example: text/plain; charset=UTF-8
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                userId: user3
+                showId: MovieV
+                rating: 1
+  /{userId}/followedUsers/{followedUserId}:
+    post:
+      tags:
+        - default
+      summary: Follow User
+      description: Follow a user
+      requestBody:
+        content: {}
+      parameters:
+        - name: ''
+          in: header
+          schema:
+            type: string
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: User id
+          example: user1
+        - name: followedUserId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Id of the followed user '
+          example: user3
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{userId}/shows/recommended:
+    get:
+      tags:
+        - default
+      summary: Calculate And Get Recomemndations
+      description: Get user's recommended shows based on her/his circle
+      parameters:
+        - name: ''
+          in: header
+          schema:
+            type: string
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: User id
+          example: user1
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '401'
+            Content-Type:
+              schema:
+                type: string
+                example: text/plain; charset=UTF-8
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                [{"title":"Movie
+                I","genre":"Action","year":"2022","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":2,"negativeReviewsQty":0},{"title":"Movie
+                III","genre":"Suspense","year":"2022","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":1,"negativeReviewsQty":0},{"title":"Movie
+                V","genre":"Horror","year":"2012","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":0,"negativeReviewsQty":1}]
+  /{userId}/shows/recommended-preloaded:
+    get:
+      tags:
+        - default
+      summary: Get Recomemndations
+      description: Get user's recommended shows based on her/his circle
+      parameters:
+        - name: ''
+          in: header
+          schema:
+            type: string
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: User Id
+          example: user1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

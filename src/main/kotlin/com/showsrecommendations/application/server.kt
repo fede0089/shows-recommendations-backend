@@ -65,14 +65,6 @@ fun main() {
 
         routing {
 
-            post("/{userId}/circle/{followedUserId}") {
-                val userId = call.parameters["userId"]!!
-                val followedUserId = call.parameters["followedUserId"]!!
-                val followUserRequest = FollowUser.Request(userId = userId, followedUserId = followedUserId)
-                val followUserResponse = followedUsersController.followUser(followUserRequest)
-                call.respondText(Gson().toJson(followUserResponse))
-            }
-
             post("/{userId}/shows/{showId}/review/{rating}") {
                 val userId = call.parameters["userId"]!!
                 val showId = call.parameters["showId"]!!
@@ -83,6 +75,14 @@ fun main() {
                     rating = rating)
                 val addReviewResponse = reviewController.addReview(addReviewRequest)
                 call.respondText(Gson().toJson(addReviewResponse))
+            }
+
+            post("/{userId}/followedUsers/{followedUserId}") {
+                val userId = call.parameters["userId"]!!
+                val followedUserId = call.parameters["followedUserId"]!!
+                val followUserRequest = FollowUser.Request(userId = userId, followedUserId = followedUserId)
+                val followUserResponse = followedUsersController.followUser(followUserRequest)
+                call.respondText(Gson().toJson(followUserResponse))
             }
 
             get("/{userId}/shows/recommended") {
