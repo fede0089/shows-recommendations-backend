@@ -1,5 +1,7 @@
 package com.showsrecommendations.application
 
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.FieldNamingStrategy
 import com.google.gson.Gson
 import com.showsrecommendations.adapters.controllers.RecommendationsController
 import com.showsrecommendations.adapters.controllers.ReviewController
@@ -45,15 +47,16 @@ fun main() {
         reviewsRepository = reviewsRepository,
         showsRepository = showsRepository
     )
-    val getShow = GetShow(showsRepository = showsRepository)
     val addReview = AddReview(reviewsRepository = reviewsRepository)
     val followUser = FollowUser(followedUsersRepository = followedUsersRepository)
+    val getShowForUnLoggedUser = GetShowForUnloggedUser(showsRepository = showsRepository)
+    val getShowForLoggedUser = GetShowForLoggedUser(showsRepository = showsRepository, reviewsRepository = reviewsRepository, recommendationsRepository = recommendationsRepository )
 
     //controllers
     val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, calculateAndGetRecommendations = calculateAndGetRecommendations)
     val reviewController = ReviewController(addReview = addReview)
     val followedUsersController = FollowedUsersController(followUser = followUser)
-    val showController = ShowController(getShow = getShow)
+    val showController = ShowController(getShowForUnloggedUser = getShowForUnLoggedUser, getShowForLoggedUser = getShowForLoggedUser)
 
     embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
 
@@ -65,10 +68,38 @@ fun main() {
         }
 
         install(ContentNegotiation) {
-            gson()
+            gson(){
+                serializeNulls()
+                setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            }
         }
 
         routing {
+
+            get("/{userId}/shows/recommended") {
+                val userId = call.parameters["userId"]!!
+                val recommendedShows = recommendationsController.calculateAndGetRecommendedShows(userId)
+                call.respond(recommendedShows)
+            }
+
+            get("/{userId}/shows/recommended-preloaded") {
+                val userId = call.parameters["userId"]!!
+                val recommendedShows = recommendationsController.getRecommendedShows(userId)
+                call.respond(recommendedShows)
+            }
+
+            get("/{userId}/shows/{showId}") {
+                val userId = call.parameters["userId"]!!
+                val showId = call.parameters["showId"]!!
+                val getShowResponse = showController.getShow(userId = userId, showId = showId) //fixme its using recomms repository (pre-loaded)
+                call.respond(getShowResponse)
+            }
+
+            get("/shows/{showId}") {
+                val showId = call.parameters["showId"]!!
+                val getShowResponse = showController.getShow(showId)
+                call.respond(getShowResponse)
+            }
 
             post("/{userId}/shows/{showId}/review/{rating}") {
                 val userId = call.parameters["userId"]!!
@@ -85,23 +116,6 @@ fun main() {
                 call.respond(followUserResponse)
             }
 
-            get("/shows/{showId}") {
-                val showId = call.parameters["showId"]!!
-                val getShowResponse = showController.getShow(showId)
-                call.respond(getShowResponse)
-            }
-
-            get("/{userId}/shows/recommended") {
-                val userId = call.parameters["userId"]!!
-                val recommendedShows = recommendationsController.calculateAndGetRecommendedShows(userId)
-                call.respond(recommendedShows)
-            }
-
-            get("/{userId}/shows/recommended-preloaded") {
-                val userId = call.parameters["userId"]!!
-                val recommendedShows = recommendationsController.getRecommendedShows(userId)
-                call.respond(recommendedShows)
-            }
         }
     }.start(wait = true)
 }

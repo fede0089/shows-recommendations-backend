@@ -5,106 +5,6 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /{userId}/shows/{showId}/review/{rating}:
-    post:
-      tags:
-        - default
-      summary: Add Review
-      description: Add logged user review of a show
-      requestBody:
-        content: {}
-      parameters:
-        - name: userId
-          in: path
-          schema:
-            type: string
-          required: true
-          description: User id
-          example: user3
-        - name: showId
-          in: path
-          schema:
-            type: string
-          required: true
-          description: Show id
-          example: MovieV
-        - name: rating
-          in: path
-          schema:
-            type: integer
-          required: true
-          description: 'Review''s rating (0: Negative, 1:Positive)'
-          example: '1'
-      responses:
-        '200':
-          description: OK
-          headers:
-            Content-Length:
-              schema:
-                type: integer
-                example: '49'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                userId: user3
-                showId: MovieV
-                rating: 1
-  /{userId}/followedUsers/{followedUserId}:
-    post:
-      tags:
-        - default
-      summary: Follow User
-      description: Add user to logged user's circle
-      requestBody:
-        content: {}
-      parameters:
-        - name: userId
-          in: path
-          schema:
-            type: string
-          required: true
-          description: User id
-          example: user1
-        - name: followedUserId
-          in: path
-          schema:
-            type: string
-          required: true
-          description: 'Id of the followed user '
-          example: user3
-      responses:
-        '200':
-          description: OK
-          headers:
-            Content-Length:
-              schema:
-                type: integer
-                example: '70'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                followedUserId: user3
-                followedDate: '2022-04-24T11:19:39.913148'
   /{userId}/shows/recommended:
     get:
       tags:
@@ -225,11 +125,65 @@ paths:
                     type: MOVIE
                     positiveReviewsQty: 0
                     negativeReviewsQty: 1
-  /shows/{showId}:
+  /{userId}/shows/{showId}:
     get:
       tags:
         - default
       summary: Get Show
+      description: Get show's details for an logged user (with its reviews)
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: showId
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Show id
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '437'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: '1'
+                title: The Gift
+                genres:
+                  - Thriller
+                year: '2000'
+                cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                type: MOVIE
+                overview: >-
+                  When a local woman disappears and the police can't seem to
+                  find any leads, her father turns to a poor young woman with
+                  psychic powers. Slowly she starts having visions of the woman
+                  chained and in a pond. Her visions lead to the body and the
+                  arrest of an abusive husband, but did he really do it?
+  /shows/{showId}:
+    get:
+      tags:
+        - default
+      summary: Get Show (Unlogged users)
       description: Get show's details for an unlogged user
       parameters:
         - name: showId
@@ -273,3 +227,103 @@ paths:
                   psychic powers. Slowly she starts having visions of the woman
                   chained and in a pond. Her visions lead to the body and the
                   arrest of an abusive husband, but did he really do it?
+  /{userId}/followedUsers/{followedUserId}:
+    post:
+      tags:
+        - default
+      summary: Follow User
+      description: Add user to logged user's circle
+      requestBody:
+        content: {}
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: User id
+          example: user1
+        - name: followedUserId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: 'Id of the followed user '
+          example: user3
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '70'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                followedUserId: user3
+                followedDate: '2022-04-24T11:19:39.913148'
+  /{userId}/shows/{showId}/review/{rating}:
+    post:
+      tags:
+        - default
+      summary: Add Review
+      description: Add logged user review of a show
+      requestBody:
+        content: {}
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: User id
+          example: user3
+        - name: showId
+          in: path
+          schema:
+            type: string
+          required: true
+          description: Show id
+          example: MovieV
+        - name: rating
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: 'Review''s rating (0: Negative, 1:Positive)'
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '49'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                userId: user3
+                showId: MovieV
+                rating: 1

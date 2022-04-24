@@ -6,202 +6,6 @@
 	},
 	"item": [
 		{
-			"name": "Add Review",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						":userId",
-						"shows",
-						":showId",
-						"review",
-						":rating"
-					],
-					"variable": [
-						{
-							"description": "User id",
-							"key": "userId",
-							"value": "user3"
-						},
-						{
-							"description": "Show id",
-							"key": "showId",
-							"value": "MovieV"
-						},
-						{
-							"description": "Review's rating (0: Negative, 1:Positive)",
-							"key": "rating",
-							"value": "1"
-						}
-					]
-				},
-				"description": "Add logged user review of a show"
-			},
-			"response": [
-				{
-					"name": "Add Review",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								":userId",
-								"shows",
-								":showId",
-								"review",
-								":rating"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "user3",
-									"description": "User id"
-								},
-								{
-									"key": "showId",
-									"value": "MovieV",
-									"description": "Show id"
-								},
-								{
-									"key": "rating",
-									"value": "1",
-									"description": "Review's rating (0: Negative, 1:Positive)"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "49"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"userId\": \"user3\",\n    \"showId\": \"MovieV\",\n    \"rating\": 1\n}"
-				}
-			]
-		},
-		{
-			"name": "Follow User",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						":userId",
-						"followedUsers",
-						":followedUserId"
-					],
-					"variable": [
-						{
-							"description": "User id",
-							"key": "userId",
-							"value": "user1"
-						},
-						{
-							"description": "Id of the followed user ",
-							"key": "followedUserId",
-							"value": "user3"
-						}
-					]
-				},
-				"description": "Add user to logged user's circle"
-			},
-			"response": [
-				{
-					"name": "Follow User",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								":userId",
-								"followedUsers",
-								":followedUserId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": "user1",
-									"description": "User id"
-								},
-								{
-									"key": "followedUserId",
-									"value": "user3",
-									"description": "Id of the followed user "
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "70"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"followedUserId\": \"user3\",\n    \"followedDate\": \"2022-04-24T11:19:39.913148\"\n}"
-				}
-			]
-		},
-		{
 			"name": "Calculate And Get Recomemndations",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {}
@@ -382,6 +186,94 @@
 				"method": "GET",
 				"header": [],
 				"url": {
+					"raw": "http://localhost:8080/:userId/shows/:showId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"shows",
+						":showId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"description": "Show id",
+							"key": "showId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Get show's details for an logged user (with its reviews)"
+			},
+			"response": [
+				{
+					"name": "Get Show",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/shows/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"shows",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "437"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Show (Unlogged users)",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
 					"raw": "http://localhost:8080/shows/:showId",
 					"protocol": "http",
 					"host": [
@@ -453,6 +345,202 @@
 					],
 					"cookie": [],
 					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Follow User",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"followedUsers",
+						":followedUserId"
+					],
+					"variable": [
+						{
+							"description": "User id",
+							"key": "userId",
+							"value": "user1"
+						},
+						{
+							"description": "Id of the followed user ",
+							"key": "followedUserId",
+							"value": "user3"
+						}
+					]
+				},
+				"description": "Add user to logged user's circle"
+			},
+			"response": [
+				{
+					"name": "Follow User",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"followedUsers",
+								":followedUserId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "user1",
+									"description": "User id"
+								},
+								{
+									"key": "followedUserId",
+									"value": "user3",
+									"description": "Id of the followed user "
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "70"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"followedUserId\": \"user3\",\n    \"followedDate\": \"2022-04-24T11:19:39.913148\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add Review",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						":userId",
+						"shows",
+						":showId",
+						"review",
+						":rating"
+					],
+					"variable": [
+						{
+							"description": "User id",
+							"key": "userId",
+							"value": "user3"
+						},
+						{
+							"description": "Show id",
+							"key": "showId",
+							"value": "MovieV"
+						},
+						{
+							"description": "Review's rating (0: Negative, 1:Positive)",
+							"key": "rating",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Add logged user review of a show"
+			},
+			"response": [
+				{
+					"name": "Add Review",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"shows",
+								":showId",
+								"review",
+								":rating"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "user3",
+									"description": "User id"
+								},
+								{
+									"key": "showId",
+									"value": "MovieV",
+									"description": "Show id"
+								},
+								{
+									"key": "rating",
+									"value": "1",
+									"description": "Review's rating (0: Negative, 1:Positive)"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "49"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"userId\": \"user3\",\n    \"showId\": \"MovieV\",\n    \"rating\": 1\n}"
 				}
 			]
 		}

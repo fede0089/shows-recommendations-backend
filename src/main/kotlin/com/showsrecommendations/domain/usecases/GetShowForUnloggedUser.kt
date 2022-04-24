@@ -2,7 +2,7 @@ package com.showsrecommendations.domain.usecases
 
 import com.showsrecommendations.domain.ports.ShowsRepository
 
-class GetShow(private val showsRepository: ShowsRepository): UseCase<GetShow.Request, GetShow.Response> {
+class GetShowForUnloggedUser(private val showsRepository: ShowsRepository): UseCase<GetShowForUnloggedUser.Request, GetShowForUnloggedUser.Response> {
 
     override operator fun invoke(getShowRequest: Request): Response {
         val show = showsRepository.getShow(getShowRequest.showId)
