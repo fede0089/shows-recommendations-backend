@@ -55,10 +55,19 @@ paths:
             application/json:
               schema:
                 type: object
-              example:
-                userId: user3
-                showId: MovieV
-                rating: 1
+              examples:
+                example-0:
+                  summary: Add Review
+                  value:
+                    userId: user3
+                    showId: MovieV
+                    rating: 1
+                example-1:
+                  summary: Add Review
+                  value:
+                    userId: user3
+                    showId: MovieV
+                    rating: 1
   /{userId}/followedUsers/{followedUserId}:
     post:
       tags:
@@ -88,9 +97,27 @@ paths:
           example: user3
       responses:
         '200':
-          description: Successful response
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '70'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+              example:
+                followedUserId: user3
+                followedDate: '2022-04-24T11:19:39.913148'
   /{userId}/shows/recommended:
     get:
       tags:
@@ -134,6 +161,35 @@ paths:
                 I","genre":"Action","year":"2022","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":2,"negativeReviewsQty":0},{"title":"Movie
                 III","genre":"Suspense","year":"2022","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":1,"negativeReviewsQty":0},{"title":"Movie
                 V","genre":"Horror","year":"2012","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":0,"negativeReviewsQty":1}]
+            application/json:
+              schema:
+                type: object
+              example:
+                recommendations:
+                  - title: The Gift
+                    genres:
+                      - Thriller
+                    year: '2000'
+                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                    type: MOVIE
+                    positiveReviewsQty: 1
+                    negativeReviewsQty: 0
+                  - title: Harry Potter and the Philosopher's Stone
+                    genres:
+                      - Fantasy
+                    year: '2001'
+                    cover: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+                    type: MOVIE
+                    positiveReviewsQty: 1
+                    negativeReviewsQty: 0
+                  - title: Harry Potter and the Chamber of Secrets
+                    genres:
+                      - Fantasy
+                    year: '2002'
+                    cover: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
+                    type: MOVIE
+                    positiveReviewsQty: 0
+                    negativeReviewsQty: 1
   /{userId}/shows/recommended-preloaded:
     get:
       tags:
@@ -154,6 +210,98 @@ paths:
           example: user1
       responses:
         '200':
-          description: Successful response
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '570'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
           content:
-            application/json: {}
+            application/json:
+              schema:
+                type: object
+              example:
+                recommendations:
+                  - title: The Gift
+                    genres:
+                      - Thriller
+                    year: '2000'
+                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                    type: MOVIE
+                    positiveReviewsQty: 1
+                    negativeReviewsQty: 0
+                  - title: Harry Potter and the Philosopher's Stone
+                    genres:
+                      - Fantasy
+                    year: '2001'
+                    cover: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
+                    type: MOVIE
+                    positiveReviewsQty: 1
+                    negativeReviewsQty: 1
+                  - title: Harry Potter and the Chamber of Secrets
+                    genres:
+                      - Fantasy
+                    year: '2002'
+                    cover: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
+                    type: MOVIE
+                    positiveReviewsQty: 0
+                    negativeReviewsQty: 1
+  /shows/1:
+    get:
+      tags:
+        - default
+      summary: Get Show
+      description: Get show's details
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: ''
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '437'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                id: '1'
+                title: The Gift
+                genres:
+                  - Thriller
+                year: '2000'
+                cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                type: MOVIE
+                overview: >-
+                  When a local woman disappears and the police can't seem to
+                  find any leads, her father turns to a poor young woman with
+                  psychic powers. Slowly she starts having visions of the woman
+                  chained and in a pond. Her visions lead to the body and the
+                  arrest of an abusive husband, but did he really do it?
