@@ -26,23 +26,23 @@
 					],
 					"variable": [
 						{
+							"description": "User id",
 							"key": "userId",
-							"value": "user3",
-							"description": "User id"
+							"value": "user3"
 						},
 						{
+							"description": "Show id",
 							"key": "showId",
-							"value": "MovieV",
-							"description": "Show id"
+							"value": "MovieV"
 						},
 						{
+							"description": "Review's rating (0: Negative, 1:Positive)",
 							"key": "rating",
-							"value": "1",
-							"description": "Review's rating (0: Negative, 1:Positive)"
+							"value": "1"
 						}
 					]
 				},
-				"description": "Add a user review of a show"
+				"description": "Add logged user review of a show"
 			},
 			"response": [
 				{
@@ -127,18 +127,18 @@
 					],
 					"variable": [
 						{
+							"description": "User id",
 							"key": "userId",
-							"value": "user1",
-							"description": "User id"
+							"value": "user1"
 						},
 						{
+							"description": "Id of the followed user ",
 							"key": "followedUserId",
-							"value": "user3",
-							"description": "Id of the followed user "
+							"value": "user3"
 						}
 					]
 				},
-				"description": "Follow a user"
+				"description": "Add user to logged user's circle"
 			},
 			"response": [
 				{
@@ -223,13 +223,13 @@
 					],
 					"variable": [
 						{
+							"description": "User id",
 							"key": "userId",
-							"value": "user1",
-							"description": "User id"
+							"value": "user1"
 						}
 					]
 				},
-				"description": "Get user's recommended shows based on her/his circle"
+				"description": "Get logged user's recommended shows based on her/his circle"
 			},
 			"response": [
 				{
@@ -309,13 +309,13 @@
 					],
 					"variable": [
 						{
+							"description": "User Id",
 							"key": "userId",
-							"value": "user1",
-							"description": "User Id"
+							"value": "user1"
 						}
 					]
 				},
-				"description": "Get user's recommended shows based on her/his circle"
+				"description": "Get logged user's recommended shows based on her/his circle"
 			},
 			"response": [
 				{
@@ -394,9 +394,9 @@
 					],
 					"variable": [
 						{
+							"description": "Show id",
 							"key": "showId",
-							"value": "1",
-							"description": "Show id"
+							"value": "1"
 						}
 					]
 				},

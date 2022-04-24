@@ -10,7 +10,7 @@ paths:
       tags:
         - default
       summary: Add Review
-      description: Add a user review of a show
+      description: Add logged user review of a show
       requestBody:
         content: {}
       parameters:
@@ -64,7 +64,7 @@ paths:
       tags:
         - default
       summary: Follow User
-      description: Follow a user
+      description: Add user to logged user's circle
       requestBody:
         content: {}
       parameters:
@@ -110,7 +110,7 @@ paths:
       tags:
         - default
       summary: Calculate And Get Recomemndations
-      description: Get user's recommended shows based on her/his circle
+      description: Get logged user's recommended shows based on her/his circle
       parameters:
         - name: userId
           in: path
@@ -170,7 +170,7 @@ paths:
       tags:
         - default
       summary: Get Recomemndations
-      description: Get user's recommended shows based on her/his circle
+      description: Get logged user's recommended shows based on her/his circle
       parameters:
         - name: userId
           in: path
