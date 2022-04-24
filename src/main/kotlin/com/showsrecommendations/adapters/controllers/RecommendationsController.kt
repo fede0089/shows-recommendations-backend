@@ -8,7 +8,7 @@ import com.showsrecommendations.domain.usecases.GetShow
 class RecommendationsController(private val getRecommendations: GetRecommendations, private val getShow: GetShow, private val calculateAndGetRecommendations: CalculateAndGetRecommendations) {
 
     fun getRecommendedShows(userId:String): List<RecommendedShowDTO> =
-        getRecommendations(userId = userId)
+        getRecommendations(getRecommendationsRequest = GetRecommendations.Request(userId = userId))
             .map{recommendation ->
                 val recommendedShow: GetShow.Response = getShow(GetShow.Request(showId = recommendation.showId))
                 RecommendedShowDTO.from(recommendation = recommendation, show = recommendedShow)

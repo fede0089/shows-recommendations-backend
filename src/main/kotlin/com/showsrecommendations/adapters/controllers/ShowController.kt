@@ -2,6 +2,8 @@ package com.showsrecommendations.adapters.controllers
 import com.showsrecommendations.domain.usecases.GetShow
 
 class ShowController(private val getShow:GetShow) {
-    fun getShow(getShowRequest: GetShow.Request): GetShow.Response =
-        getShow.invoke(getShowRequest = getShowRequest)
+    fun getShow(showId: String): GetShow.Response {
+        val getShowRequest = GetShow.Request(showId = showId)
+        return getShow.invoke(getShowRequest = getShowRequest)
+    }
 }

@@ -1,12 +1,8 @@
 package com.showsrecommendations.domain.usecases
-
-import com.showsrecommendations.adapters.repositories.inmemory.RecommendationsRepositoryInMemory
-import com.showsrecommendations.adapters.repositories.inmemory.ReviewsRepositoryInMemory
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
 import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
-import com.showsrecommendations.domain.ports.UsersRepository
 import io.mockk.every
 import io.mockk.mockk
 
@@ -51,7 +47,7 @@ class GetRecommendationsTest : Spek({
             }
 
             When("user1 gets its recommendations") {
-                recommendedShowsIds = getRecommendations(userId = "user1").map { it.showId }
+                recommendedShowsIds = getRecommendations(GetRecommendations.Request(userId = "user1")).map { it.showId }
             }
 
             Then("the reviewed show is removed and the rest are ordered by its rating (desc)") {

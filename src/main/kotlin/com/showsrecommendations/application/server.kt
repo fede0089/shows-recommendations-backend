@@ -71,20 +71,21 @@ fun main() {
                 val userId = call.parameters["userId"]!!
                 val showId = call.parameters["showId"]!!
                 val rating = call.parameters["rating"]!!?.toFloat()
-                val addReviewRequest = AddReview.Request(
-                    userId = userId,
-                    showId = showId,
-                    rating = rating)
-                val addReviewResponse = reviewController.addReview(addReviewRequest)
+                val addReviewResponse = reviewController.addReview(userId, showId, rating)
                 call.respondText(Gson().toJson(addReviewResponse))
             }
 
             post("/{userId}/followedUsers/{followedUserId}") {
                 val userId = call.parameters["userId"]!!
                 val followedUserId = call.parameters["followedUserId"]!!
-                val followUserRequest = FollowUser.Request(userId = userId, followedUserId = followedUserId)
-                val followUserResponse = followedUsersController.followUser(followUserRequest)
+                val followUserResponse = followedUsersController.followUser(userId = userId, followedUserId = followedUserId)
                 call.respondText(Gson().toJson(followUserResponse))
+            }
+
+            get("/shows/{showId}") {
+                val showId = call.parameters["showId"]!!
+                val getShowResponse = showController.getShow(showId)
+                call.respondText(Gson().toJson(getShowResponse))
             }
 
             get("/{userId}/shows/recommended") {
@@ -98,14 +99,6 @@ fun main() {
                 val recommendedShows = recommendationsController.getRecommendedShows(userId)
                 call.respondText(Gson().toJson(recommendedShows))
             }
-
-            get("/shows/{showId}") {
-                val showId = call.parameters["showId"]!!
-                val getShowRequest = GetShow.Request(showId = showId)
-                val getShowResponse = showController.getShow(getShowRequest)
-                call.respondText(Gson().toJson(getShowResponse))
-            }
-
         }
     }.start(wait = true)
 }
