@@ -2,6 +2,7 @@ package com.showsrecommendations.adapters.controllers.dtos
 
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Show
+import com.showsrecommendations.domain.usecases.GetShow
 
 data class RecommendedShowDTO (val title:String,
                                val genres: List<String>,
@@ -12,7 +13,7 @@ data class RecommendedShowDTO (val title:String,
                                val negativeReviewsQty: Int){
 
     companion object {
-        fun from(recommendation: Recommendation, show: Show): RecommendedShowDTO =
+        fun from(recommendation: Recommendation, show: GetShow.Response): RecommendedShowDTO =
             RecommendedShowDTO(
                 title = show.title,
                 genres = show.genres,
