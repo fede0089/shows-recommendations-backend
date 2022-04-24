@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.showsrecommendations.adapters.controllers.RecommendationsController
 import com.showsrecommendations.adapters.controllers.ReviewController
 import com.showsrecommendations.adapters.controllers.FollowedUsersController
+import com.showsrecommendations.adapters.controllers.ShowController
 import com.showsrecommendations.adapters.repositories.inmemory.*
 import com.showsrecommendations.domain.entities.FollowedUser
 import com.showsrecommendations.domain.entities.Recommendation
@@ -49,6 +50,7 @@ fun main() {
     val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, getShow = getShow, calculateAndGetRecommendations = calculateAndGetRecommendations)
     val reviewController = ReviewController(addReview = addReview)
     val followedUsersController = FollowedUsersController(followUser = followUser)
+    val showController = ShowController(getShow = getShow)
 
     embeddedServer(Netty, port = 8080, host = "127.0.0.1") {
 
@@ -97,6 +99,13 @@ fun main() {
                 call.respondText(Gson().toJson(recommendedShows))
             }
 
+            get("/shows/{showId}") {
+                val showId = call.parameters["showId"]!!
+                val getShowRequest = GetShow.Request(showId = showId)
+                val getShowResponse = showController.getShow(getShowRequest)
+                call.respondText(Gson().toJson(getShowResponse))
+            }
+
         }
     }.start(wait = true)
 }
@@ -114,17 +123,17 @@ fun buildReviewsRepository(): ReviewsRepository {
     val reviewsRepository = ReviewsRepositoryInMemory()
 
     reviewsRepository["user1"] = mutableListOf(
-        Review(showId = "MovieVI", rating = 1f, createdDate = "20220218")
+        Review(showId = "6", rating = 1f, createdDate = "20220218")
     )
     reviewsRepository["user2"] = mutableListOf(
-        Review(showId = "MovieI", rating = 1f, createdDate = "20220218"),
-        Review(showId = "MovieIII", rating = 1f, createdDate = "20220218"),
-        Review(showId = "MovieV", rating = 0f, createdDate = "20220218"),
-        Review(showId = "MovieVI", rating = 1f, createdDate = "20220218")
+        Review(showId = "1", rating = 1f, createdDate = "20220218"),
+        Review(showId = "3", rating = 1f, createdDate = "20220218"),
+        Review(showId = "5", rating = 0f, createdDate = "20220218"),
+        Review(showId = "6", rating = 1f, createdDate = "20220218")
     )
     reviewsRepository["user3"] = mutableListOf(
-        Review(showId = "MovieI", rating = 1f, createdDate = "20220218"),
-        Review(showId = "MovieVI", rating = 1f, createdDate = "20220218")
+        Review(showId = "1", rating = 1f, createdDate = "20220218"),
+        Review(showId = "6", rating = 1f, createdDate = "20220218")
     )
 
     return reviewsRepository
@@ -133,19 +142,19 @@ fun buildReviewsRepository(): ReviewsRepository {
 fun buildRecommendationsRepository(): RecommendationsRepository {
     val recommendationsRepository = RecommendationsRepositoryInMemory()
     recommendationsRepository["user1"] = listOf(
-        Recommendation(showId = "MovieI", positiveReviewsQty = 1, negativeReviewsQty = 0),
-        Recommendation(showId = "MovieIII", positiveReviewsQty = 1, negativeReviewsQty = 1),
-        Recommendation(showId = "MovieV", positiveReviewsQty = 0, negativeReviewsQty = 1),
-        Recommendation(showId = "MovieVI", positiveReviewsQty = 1, negativeReviewsQty = 0)
+        Recommendation(showId = "1", positiveReviewsQty = 1, negativeReviewsQty = 0),
+        Recommendation(showId = "3", positiveReviewsQty = 1, negativeReviewsQty = 1),
+        Recommendation(showId = "5", positiveReviewsQty = 0, negativeReviewsQty = 1),
+        Recommendation(showId = "6", positiveReviewsQty = 1, negativeReviewsQty = 0)
     )
     return recommendationsRepository
 }
 
 fun buildShowsRepository(): ShowsRepository{
     val showsRepository = ShowsRepositoryInMemory()
-    showsRepository["MovieI"] = Show(id = "MovieI", title = "Movie I", genre = "Action", year = "2022", cover = "cover.jpg", type = "MOVIE", externalId = "imdb#movieI")
-    showsRepository["MovieIII"] = Show(id = "MovieIII", title = "Movie III", genre = "Suspense", year = "2022", cover = "cover.jpg", type = "MOVIE", externalId = "imdb#movieIII")
-    showsRepository["MovieV"] = Show(id = "MovieV", title = "Movie V", genre = "Horror", year = "2012", cover = "cover.jpg", type = "MOVIE", externalId = "imdb#movieV")
-    showsRepository["MovieVI"] = Show(id = "MovieVI", title = "Movie VI", genre = "Comedy", year = "2021", cover = "cover.jpg", type = "MOVIE", externalId = "imdb#movieVI")
+    showsRepository["1"] = Show(id = "1", title = "The Gift", overview = "When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?",genres = listOf("Thriller"), year = "2000", cover = "/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg", type = "MOVIE", imdbId = "tt0219699" ,externalId = "tmdb#2046")
+    showsRepository["3"] = Show(id = "3", title = "Harry Potter and the Philosopher's Stone", overview = "Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his 11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame.", genres = listOf("Fantasy"), year = "2001", cover = "/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg", type = "MOVIE", imdbId = "tt0241527", externalId = "tmdb#671")
+    showsRepository["5"] = Show(id = "5", title = "Harry Potter and the Chamber of Secrets", overview = "Cars fly, trees fight back, and a mysterious house-elf comes to warn Harry Potter at the start of his second year at Hogwarts. Adventure and danger await when bloody writing on a wall announces: The Chamber Of Secrets Has Been Opened. To save Hogwarts will require all of Harry, Ron and Hermione’s magical abilities and courage.", genres = listOf("Fantasy"), year = "2002", cover = "/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg", type = "MOVIE", imdbId = "tt0295297" ,externalId = "tmdb#672")
+    showsRepository["6"] = Show(id = "6", title = "Titanic", overview = "101-year-old Rose DeWitt Bukater tells the story of her life aboard the Titanic, 84 years later. A young Rose boards the ship with her mother and fiancé. Meanwhile, Jack Dawson and Fabrizio De Rossi win third-class tickets aboard the ship. Rose tells the whole story from Titanic's departure through to its death—on its first and last voyage—on April 15, 1912.", genres = listOf("Drama"), year = "1997", cover = "/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg", type = "MOVIE", imdbId = "tt0120338", externalId = "tmdb#597")
     return showsRepository
 }

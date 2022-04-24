@@ -11,14 +11,14 @@ class RecommendationsController(private val getRecommendations: GetRecommendatio
     fun getRecommendedShows(userId:String): List<RecommendedShowDTO> =
         getRecommendations(userId = userId)
             .map{recommendation ->
-                val recommendedShow: Show = getShow(recommendation.showId)
+                val recommendedShow: Show = getShow(GetShow.Request(showId = recommendation.showId)).show
                 RecommendedShowDTO.from(recommendation = recommendation, show = recommendedShow)
             }
 
     fun calculateAndGetRecommendedShows(userId:String): List<RecommendedShowDTO> =
         calculateAndGetRecommendations(userId = userId)
             .map{recommendation ->
-                val recommendedShow: Show = getShow(recommendation.showId)
+                val recommendedShow: Show = getShow(GetShow.Request(showId = recommendation.showId)).show
                 RecommendedShowDTO.from(recommendation = recommendation, show = recommendedShow)
             }
 }

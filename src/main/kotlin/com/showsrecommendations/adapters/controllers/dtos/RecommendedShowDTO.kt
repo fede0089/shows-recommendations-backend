@@ -4,7 +4,7 @@ import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Show
 
 data class RecommendedShowDTO (val title:String,
-                               val genre: String,
+                               val genres: List<String>,
                                val year:String,
                                val cover:String,
                                val type:String,
@@ -15,7 +15,7 @@ data class RecommendedShowDTO (val title:String,
         fun from(recommendation: Recommendation, show: Show): RecommendedShowDTO =
             RecommendedShowDTO(
                 title = show.title,
-                genre = show.genre,
+                genres = show.genres,
                 year = show.year,
                 cover = show.cover,
                 type = show.type,
