@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.0"
+    id("com.github.johnrengelman.shadow") version "6.1.0"
     application
 }
 
@@ -43,16 +44,26 @@ dependencies {
 
 }
 
+tasks {
 
-tasks.test {
-    useJUnitPlatform {
-        includeEngines("spek2")
-    }}
+    test {
+        useJUnitPlatform {
+            includeEngines("spek2")
+        }
+    }
 
-tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "11"
+    withType<KotlinCompile>() {
+        kotlinOptions.jvmTarget = "11"
+    }
+
+    withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+        manifest {
+            attributes("Main-Class" to "com.showsrecommendations.application.ServerKt")
+        }
+    }
 }
 
 application {
     mainClassName = "com.showsrecommendations.application.ServerKt"
 }
+
