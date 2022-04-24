@@ -68,10 +68,6 @@ paths:
       requestBody:
         content: {}
       parameters:
-        - name: ''
-          in: header
-          schema:
-            type: string
         - name: userId
           in: path
           schema:
@@ -116,10 +112,6 @@ paths:
       summary: Calculate And Get Recomemndations
       description: Get user's recommended shows based on her/his circle
       parameters:
-        - name: ''
-          in: header
-          schema:
-            type: string
         - name: userId
           in: path
           schema:
@@ -180,10 +172,6 @@ paths:
       summary: Get Recomemndations
       description: Get user's recommended shows based on her/his circle
       parameters:
-        - name: ''
-          in: header
-          schema:
-            type: string
         - name: userId
           in: path
           schema:
@@ -242,18 +230,8 @@ paths:
       tags:
         - default
       summary: Get Show
-      description: Get show's details
+      description: Get show's details for an unlogged user
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: ''
-          in: header
-          schema:
-            type: string
-          example: application/json
         - name: showId
           in: path
           schema:

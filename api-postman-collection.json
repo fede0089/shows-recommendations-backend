@@ -112,14 +112,7 @@
 			},
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
 					"protocol": "http",
@@ -215,14 +208,7 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "",
-						"type": "text",
-						"value": "",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/:userId/shows/recommended",
 					"protocol": "http",
@@ -308,14 +294,7 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/:userId/shows/recommended-preloaded",
 					"protocol": "http",
@@ -401,20 +380,7 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text",
-						"disabled": true
-					},
-					{
-						"key": "",
-						"value": "application/json",
-						"type": "text",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/shows/:showId",
 					"protocol": "http",
@@ -434,7 +400,7 @@
 						}
 					]
 				},
-				"description": "Get show's details"
+				"description": "Get show's details for an unlogged user"
 			},
 			"response": [
 				{
