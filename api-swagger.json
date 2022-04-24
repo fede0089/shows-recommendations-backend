@@ -46,7 +46,7 @@ paths:
             Content-Type:
               schema:
                 type: string
-                example: text/plain; charset=UTF-8
+                example: application/json
             Connection:
               schema:
                 type: string
@@ -55,19 +55,10 @@ paths:
             application/json:
               schema:
                 type: object
-              examples:
-                example-0:
-                  summary: Add Review
-                  value:
-                    userId: user3
-                    showId: MovieV
-                    rating: 1
-                example-1:
-                  summary: Add Review
-                  value:
-                    userId: user3
-                    showId: MovieV
-                    rating: 1
+              example:
+                userId: user3
+                showId: MovieV
+                rating: 1
   /{userId}/followedUsers/{followedUserId}:
     post:
       tags:
@@ -143,24 +134,16 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '401'
+                example: '570'
             Content-Type:
               schema:
                 type: string
-                example: text/plain; charset=UTF-8
+                example: application/json
             Connection:
               schema:
                 type: string
                 example: keep-alive
           content:
-            text/plain:
-              schema:
-                type: string
-              example: >-
-                [{"title":"Movie
-                I","genre":"Action","year":"2022","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":2,"negativeReviewsQty":0},{"title":"Movie
-                III","genre":"Suspense","year":"2022","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":1,"negativeReviewsQty":0},{"title":"Movie
-                V","genre":"Horror","year":"2012","cover":"cover.jpg","type":"MOVIE","positiveReviewsQty":0,"negativeReviewsQty":1}]
             application/json:
               schema:
                 type: object
@@ -254,7 +237,7 @@ paths:
                     type: MOVIE
                     positiveReviewsQty: 0
                     negativeReviewsQty: 1
-  /shows/1:
+  /shows/{showId}:
     get:
       tags:
         - default
@@ -271,6 +254,13 @@ paths:
           schema:
             type: string
           example: application/json
+        - name: showId
+          in: path
+          schema:
+            type: integer
+          required: true
+          description: Show id
+          example: '1'
       responses:
         '200':
           description: OK

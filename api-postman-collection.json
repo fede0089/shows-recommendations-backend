@@ -67,64 +67,6 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": "User1",
-									"description": "User identifier"
-								},
-								{
-									"key": "showId",
-									"value": "MovieV",
-									"description": "Show idenifier"
-								},
-								{
-									"key": "rating",
-									"value": "1",
-									"description": "Show's rating (0 > Negative, 1> Positive) "
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "49"
-						},
-						{
-							"key": "Content-Type",
-							"value": "text/plain; charset=UTF-8"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"userId\": \"user3\",\n    \"showId\": \"MovieV\",\n    \"rating\": 1\n}"
-				},
-				{
-					"name": "Add Review",
-					"originalRequest": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								":userId",
-								"shows",
-								":showId",
-								"review",
-								":rating"
-							],
-							"variable": [
-								{
-									"key": "userId",
 									"value": "user3",
 									"description": "User id"
 								},
@@ -331,59 +273,6 @@
 							"variable": [
 								{
 									"key": "userId",
-									"value": "",
-									"description": "User id"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "plain",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "401"
-						},
-						{
-							"key": "Content-Type",
-							"value": "text/plain; charset=UTF-8"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "[{\"title\":\"Movie I\",\"genre\":\"Action\",\"year\":\"2022\",\"cover\":\"cover.jpg\",\"type\":\"MOVIE\",\"positiveReviewsQty\":2,\"negativeReviewsQty\":0},{\"title\":\"Movie III\",\"genre\":\"Suspense\",\"year\":\"2022\",\"cover\":\"cover.jpg\",\"type\":\"MOVIE\",\"positiveReviewsQty\":1,\"negativeReviewsQty\":0},{\"title\":\"Movie V\",\"genre\":\"Horror\",\"year\":\"2012\",\"cover\":\"cover.jpg\",\"type\":\"MOVIE\",\"positiveReviewsQty\":0,\"negativeReviewsQty\":1}]"
-				},
-				{
-					"name": "Calculate And Get Recomemndations",
-					"originalRequest": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "",
-								"type": "text",
-								"value": "",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/:userId/shows/recommended",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								":userId",
-								"shows",
-								"recommended"
-							],
-							"variable": [
-								{
-									"key": "userId",
 									"value": "user1",
 									"description": "User id"
 								}
@@ -527,7 +416,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/shows/1",
+					"raw": "http://localhost:8080/shows/:showId",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -535,7 +424,14 @@
 					"port": "8080",
 					"path": [
 						"shows",
-						"1"
+						":showId"
+					],
+					"variable": [
+						{
+							"key": "showId",
+							"value": "1",
+							"description": "Show id"
+						}
 					]
 				},
 				"description": "Get show's details"
