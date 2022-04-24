@@ -26,7 +26,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '570'
+                example: '582'
             Content-Type:
               schema:
                 type: string
@@ -47,24 +47,24 @@ paths:
                     year: '2000'
                     cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
                     type: MOVIE
-                    positiveReviewsQty: 1
-                    negativeReviewsQty: 0
+                    positive_reviews_qty: 1
+                    negative_reviews_qty: 0
                   - title: Harry Potter and the Philosopher's Stone
                     genres:
                       - Fantasy
                     year: '2001'
                     cover: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
                     type: MOVIE
-                    positiveReviewsQty: 1
-                    negativeReviewsQty: 0
+                    positive_reviews_qty: 1
+                    negative_reviews_qty: 0
                   - title: Harry Potter and the Chamber of Secrets
                     genres:
                       - Fantasy
                     year: '2002'
                     cover: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
                     type: MOVIE
-                    positiveReviewsQty: 0
-                    negativeReviewsQty: 1
+                    positive_reviews_qty: 0
+                    negative_reviews_qty: 1
   /{userId}/shows/recommended-preloaded:
     get:
       tags:
@@ -86,7 +86,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '570'
+                example: '582'
             Content-Type:
               schema:
                 type: string
@@ -107,24 +107,24 @@ paths:
                     year: '2000'
                     cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
                     type: MOVIE
-                    positiveReviewsQty: 1
-                    negativeReviewsQty: 0
+                    positive_reviews_qty: 1
+                    negative_reviews_qty: 0
                   - title: Harry Potter and the Philosopher's Stone
                     genres:
                       - Fantasy
                     year: '2001'
                     cover: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
                     type: MOVIE
-                    positiveReviewsQty: 1
-                    negativeReviewsQty: 1
+                    positive_reviews_qty: 1
+                    negative_reviews_qty: 1
                   - title: Harry Potter and the Chamber of Secrets
                     genres:
                       - Fantasy
                     year: '2002'
                     cover: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
                     type: MOVIE
-                    positiveReviewsQty: 0
-                    negativeReviewsQty: 1
+                    positive_reviews_qty: 0
+                    negative_reviews_qty: 1
   /{userId}/shows/{showId}:
     get:
       tags:
@@ -152,7 +152,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '437'
+                example: '506'
             Content-Type:
               schema:
                 type: string
@@ -179,6 +179,9 @@ paths:
                   psychic powers. Slowly she starts having visions of the woman
                   chained and in a pond. Her visions lead to the body and the
                   arrest of an abusive husband, but did he really do it?
+                user_review: null
+                positive_reviews_qty: 0
+                negative_reviews_qty: 0
   /shows/{showId}:
     get:
       tags:
@@ -213,20 +216,41 @@ paths:
             application/json:
               schema:
                 type: object
-              example:
-                id: '1'
-                title: The Gift
-                genres:
-                  - Thriller
-                year: '2000'
-                cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
-                type: MOVIE
-                overview: >-
-                  When a local woman disappears and the police can't seem to
-                  find any leads, her father turns to a poor young woman with
-                  psychic powers. Slowly she starts having visions of the woman
-                  chained and in a pond. Her visions lead to the body and the
-                  arrest of an abusive husband, but did he really do it?
+              examples:
+                example-0:
+                  summary: Get Show (Unlogged users)
+                  value:
+                    id: '1'
+                    title: The Gift
+                    genres:
+                      - Thriller
+                    year: '2000'
+                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                    type: MOVIE
+                    overview: >-
+                      When a local woman disappears and the police can't seem to
+                      find any leads, her father turns to a poor young woman
+                      with psychic powers. Slowly she starts having visions of
+                      the woman chained and in a pond. Her visions lead to the
+                      body and the arrest of an abusive husband, but did he
+                      really do it?
+                example-1:
+                  summary: Get Show (Unlogged users)
+                  value:
+                    id: '1'
+                    title: The Gift
+                    genres:
+                      - Thriller
+                    year: '2000'
+                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                    type: MOVIE
+                    overview: >-
+                      When a local woman disappears and the police can't seem to
+                      find any leads, her father turns to a poor young woman
+                      with psychic powers. Slowly she starts having visions of
+                      the woman chained and in a pond. Her visions lead to the
+                      body and the arrest of an abusive husband, but did he
+                      really do it?
   /{userId}/followedUsers/{followedUserId}:
     post:
       tags:
@@ -257,7 +281,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '70'
+                example: '73'
             Content-Type:
               schema:
                 type: string
@@ -271,8 +295,8 @@ paths:
               schema:
                 type: object
               example:
-                followedUserId: user3
-                followedDate: '2022-04-24T11:19:39.913148'
+                followed_user_id: user3
+                followed_date: '2022-04-24T12:24:52.904455'
   /{userId}/shows/{showId}/review/{rating}:
     post:
       tags:
@@ -310,7 +334,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '49'
+                example: '51'
             Content-Type:
               schema:
                 type: string
@@ -324,6 +348,6 @@ paths:
               schema:
                 type: object
               example:
-                userId: user3
-                showId: MovieV
+                user_id: user3
+                show_id: MovieV
                 rating: 1
