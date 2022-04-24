@@ -1,12 +1,14 @@
 package com.showsrecommendations.domain.usecases
 
 import com.showsrecommendations.domain.entities.FollowedUser
-import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
+import com.showsrecommendations.domain.entities.Show
 import com.showsrecommendations.domain.ports.FollowedUsersRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
+import com.showsrecommendations.domain.ports.ShowsRepository
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 
 import org.junit.jupiter.api.Assertions.*
 import org.spekframework.spek2.Spek
@@ -17,14 +19,16 @@ class CalculateAndGetRecommendationsTest : Spek({
     Feature("2.1 CalculateAndGetRecommendations") {
 
         val reviewsRepository = mockk<ReviewsRepository>(relaxed = true)
+        val showsRepository = mockk<ShowsRepository>(relaxed = true)
         val followedUsersRepository = mockk<FollowedUsersRepository>(relaxed = true)
 
         val calculateAndGetRecommendations = CalculateAndGetRecommendations(
             followedUsersRepository = followedUsersRepository,
-            reviewsRepository = reviewsRepository
+            reviewsRepository = reviewsRepository,
+            showsRepository = showsRepository
         )
 
-        var recommendedShows: List<Recommendation> = listOf()
+        var recommendedShows: List<CalculateAndGetRecommendations.RecommendedShow> = listOf()
 
         Scenario("2.1.1 Calculating and getting recommendations") {
 
@@ -86,20 +90,45 @@ class CalculateAndGetRecommendationsTest : Spek({
                 )
             }
 
+            And("a shows repository"){
+                val showIdSlot = slot<String>()
+                every {
+                    showsRepository.getShow(id = capture(showIdSlot))
+                } answers {
+                    Show(
+                        id = showIdSlot.captured,
+                        title = showIdSlot.captured,
+                        genres = listOf(""),
+                        year = "unnecessary",
+                        cover = "unnecessary",
+                        type = "unnecessary",
+                        overview = "unnecessary",
+                        imdbId = "unnecessary",
+                        externalId = "unnecessary"
+                    )
+                }
+            }
+
             When("user1 gets its recommendations") {
-                recommendedShows = calculateAndGetRecommendations(userId = "user1")
+                recommendedShows = calculateAndGetRecommendations(CalculateAndGetRecommendations.Request(userId = "user1")).recommendations
             }
 
             Then("user1 sees Movie I with 4 recommendations, Movie III with 4 recommendations and 1 un-recommendation and Movie V with 1 recommendation and 1 un-recommendation") {
-                assertEquals(3, recommendedShows.size)
-                assertEquals(
-                    recommendedShows, listOf(
-                        Recommendation(showId = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0),
-                        Recommendation(showId = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1),
-                        Recommendation(showId = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1)
+                val expectedRecommendedShows = listOf(
+                    CalculateAndGetRecommendations.RecommendedShow(
+                        title = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0, genres = listOf(""), year = "unnecessary", cover = "unnecessary", type = "unnecessary"
+                    ),
+                    CalculateAndGetRecommendations.RecommendedShow(
+                        title = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1, genres = listOf(""), year = "unnecessary", cover = "unnecessary", type = "unnecessary"
+                    ),
+                    CalculateAndGetRecommendations.RecommendedShow(
+                        title = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1, genres = listOf(""), year = "unnecessary", cover = "unnecessary", type = "unnecessary"
                     )
                 )
+                assertEquals(3, recommendedShows.size)
+                assertEquals(expectedRecommendedShows, recommendedShows)
             }
         }
     }
 })
+

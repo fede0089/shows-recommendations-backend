@@ -1,10 +1,13 @@
 package com.showsrecommendations.domain.usecases
 import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
+import com.showsrecommendations.domain.entities.Show
 import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
+import com.showsrecommendations.domain.ports.ShowsRepository
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 
 import org.junit.jupiter.api.Assertions.*
 import org.spekframework.spek2.Spek
@@ -16,13 +19,15 @@ class GetRecommendationsTest : Spek({
 
         val reviewsRepository = mockk<ReviewsRepository>(relaxed = true)
         val recommendationsRepository = mockk<RecommendationsRepository>(relaxed = true)
+        val showsRepository = mockk<ShowsRepository>(relaxed = true)
 
         val getRecommendations = GetRecommendations(
             recommendationsRepository = recommendationsRepository,
-            reviewsRepository = reviewsRepository
+            reviewsRepository = reviewsRepository,
+            showsRepository = showsRepository
         )
 
-        var recommendedShowsIds: List<String> = listOf()
+        var recommendedShowsTitles: List<String> = listOf()
 
         Scenario("2.1.2 Getting recommendations") {
 
@@ -46,13 +51,33 @@ class GetRecommendationsTest : Spek({
                 )
             }
 
+            And("a shows repository"){
+                val showIdSlot = slot<String>()
+                every {
+                    showsRepository.getShow(id = capture(showIdSlot))
+                } answers {
+                    Show(
+                        id = showIdSlot.captured,
+                        title = showIdSlot.captured,
+                        genres = listOf(""),
+                        year = "unnecessary",
+                        cover = "unnecessary",
+                        type = "unnecessary",
+                        overview = "unnecessary",
+                        imdbId = "unnecessary",
+                        externalId = "unnecessary"
+                    )
+                }
+            }
+
             When("user1 gets its recommendations") {
-                recommendedShowsIds = getRecommendations(GetRecommendations.Request(userId = "user1")).map { it.showId }
+                recommendedShowsTitles = getRecommendations(GetRecommendations.Request(userId = "user1")).recommendations.map { it.title}
             }
 
             Then("the reviewed show is removed and the rest are ordered by its rating (desc)") {
-                assertEquals(3, recommendedShowsIds.size)
-                assertEquals(recommendedShowsIds, listOf("MovieI", "MovieIII", "MovieV"))
+                val expectedRecommendedShowsTitles = listOf("MovieI", "MovieIII", "MovieV")
+                assertEquals(expectedRecommendedShowsTitles.size, recommendedShowsTitles.size)
+                assertEquals(expectedRecommendedShowsTitles, recommendedShowsTitles)
             }
         }
     }

@@ -37,17 +37,20 @@ fun main() {
     //use cases
     val getRecommendations = GetRecommendations(
         recommendationsRepository= recommendationsRepository,
-        reviewsRepository = reviewsRepository)
+        reviewsRepository = reviewsRepository,
+        showsRepository = showsRepository
+    )
     val calculateAndGetRecommendations = CalculateAndGetRecommendations(
         followedUsersRepository = followedUsersRepository,
-        reviewsRepository = reviewsRepository
+        reviewsRepository = reviewsRepository,
+        showsRepository = showsRepository
     )
     val getShow = GetShow(showsRepository = showsRepository)
     val addReview = AddReview(reviewsRepository = reviewsRepository)
     val followUser = FollowUser(followedUsersRepository = followedUsersRepository)
 
     //controllers
-    val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, getShow = getShow, calculateAndGetRecommendations = calculateAndGetRecommendations)
+    val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, calculateAndGetRecommendations = calculateAndGetRecommendations)
     val reviewController = ReviewController(addReview = addReview)
     val followedUsersController = FollowedUsersController(followUser = followUser)
     val showController = ShowController(getShow = getShow)
@@ -72,32 +75,32 @@ fun main() {
                 val showId = call.parameters["showId"]!!
                 val rating = call.parameters["rating"]!!?.toFloat()
                 val addReviewResponse = reviewController.addReview(userId, showId, rating)
-                call.respondText(Gson().toJson(addReviewResponse))
+                call.respond(addReviewResponse)
             }
 
             post("/{userId}/followedUsers/{followedUserId}") {
                 val userId = call.parameters["userId"]!!
                 val followedUserId = call.parameters["followedUserId"]!!
                 val followUserResponse = followedUsersController.followUser(userId = userId, followedUserId = followedUserId)
-                call.respondText(Gson().toJson(followUserResponse))
+                call.respond(followUserResponse)
             }
 
             get("/shows/{showId}") {
                 val showId = call.parameters["showId"]!!
                 val getShowResponse = showController.getShow(showId)
-                call.respondText(Gson().toJson(getShowResponse))
+                call.respond(getShowResponse)
             }
 
             get("/{userId}/shows/recommended") {
                 val userId = call.parameters["userId"]!!
                 val recommendedShows = recommendationsController.calculateAndGetRecommendedShows(userId)
-                call.respondText(Gson().toJson(recommendedShows))
+                call.respond(recommendedShows)
             }
 
             get("/{userId}/shows/recommended-preloaded") {
                 val userId = call.parameters["userId"]!!
                 val recommendedShows = recommendationsController.getRecommendedShows(userId)
-                call.respondText(Gson().toJson(recommendedShows))
+                call.respond(recommendedShows)
             }
         }
     }.start(wait = true)
