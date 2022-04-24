@@ -16,6 +16,7 @@ class GetRecommendations(private val recommendationsRepository: RecommendationsR
             .map{
                 val show: Show = showsRepository.getShow(it.showId)
                 RecommendedShow(
+                    id = show.id,
                     title = show.title,
                     genres = show.genres,
                     year = show.year,
@@ -33,11 +34,14 @@ class GetRecommendations(private val recommendationsRepository: RecommendationsR
 
     data class Request(val userId:String)
     data class Response(val recommendations: List<RecommendedShow>)
-    data class RecommendedShow (val title:String,
-                                val genres: List<String>,
-                                val year:String,
-                                val cover:String,
-                                val type:String,
-                                val positiveReviewsQty:Int,
-                                val negativeReviewsQty: Int)
+    data class RecommendedShow (
+        val id:String,
+        val title:String,
+        val genres: List<String>,
+        val year:String,
+        val cover:String,
+        val type:String,
+        val positiveReviewsQty:Int,
+        val negativeReviewsQty: Int
+    )
 }

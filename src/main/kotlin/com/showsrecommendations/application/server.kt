@@ -1,7 +1,6 @@
 package com.showsrecommendations.application
 
 import com.google.gson.FieldNamingPolicy
-import com.google.gson.FieldNamingStrategy
 import com.google.gson.Gson
 import com.showsrecommendations.adapters.controllers.RecommendationsController
 import com.showsrecommendations.adapters.controllers.ReviewController
@@ -9,11 +8,9 @@ import com.showsrecommendations.adapters.controllers.FollowedUsersController
 import com.showsrecommendations.adapters.controllers.ShowController
 import com.showsrecommendations.adapters.repositories.inmemory.*
 import com.showsrecommendations.domain.entities.FollowedUser
-import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
 import com.showsrecommendations.domain.entities.Show
 import com.showsrecommendations.domain.ports.FollowedUsersRepository
-import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.ShowsRepository
 import com.showsrecommendations.domain.usecases.*
@@ -31,19 +28,14 @@ import io.ktor.server.routing.*
 fun main() {
 
     //repositories impl.
-    val recommendationsRepository = buildRecommendationsRepository()
     val reviewsRepository = buildReviewsRepository()
     val showsRepository = buildShowsRepository()
     val followedUsersRepository = buildUsersRepository()
+    val recommendationsRepository = RecommendationsRepositoryInMemory(followedUsersRepository = followedUsersRepository, reviewsRepository = reviewsRepository)
 
     //use cases
     val getRecommendations = GetRecommendations(
         recommendationsRepository= recommendationsRepository,
-        reviewsRepository = reviewsRepository,
-        showsRepository = showsRepository
-    )
-    val calculateAndGetRecommendations = CalculateAndGetRecommendations(
-        followedUsersRepository = followedUsersRepository,
         reviewsRepository = reviewsRepository,
         showsRepository = showsRepository
     )
@@ -53,7 +45,7 @@ fun main() {
     val getShowForLoggedUser = GetShowForLoggedUser(showsRepository = showsRepository, reviewsRepository = reviewsRepository, recommendationsRepository = recommendationsRepository )
 
     //controllers
-    val recommendationsController = RecommendationsController(getRecommendations = getRecommendations, calculateAndGetRecommendations = calculateAndGetRecommendations)
+    val recommendationsController = RecommendationsController(getRecommendations = getRecommendations)
     val reviewController = ReviewController(addReview = addReview)
     val followedUsersController = FollowedUsersController(followUser = followUser)
     val showController = ShowController(getShowForUnloggedUser = getShowForUnLoggedUser, getShowForLoggedUser = getShowForLoggedUser)
@@ -63,7 +55,7 @@ fun main() {
         //plugins
         install(StatusPages) {
             exception<BadRequestException>{ call, cause ->
-                call.respond(HttpStatusCode.BadRequest, Gson().toJson(cause))
+                call.respond(HttpStatusCode.BadRequest, cause)
             }
         }
 
@@ -77,12 +69,6 @@ fun main() {
         routing {
 
             get("/{userId}/shows/recommended") {
-                val userId = call.parameters["userId"]!!
-                val recommendedShows = recommendationsController.calculateAndGetRecommendedShows(userId)
-                call.respond(recommendedShows)
-            }
-
-            get("/{userId}/shows/recommended-preloaded") {
                 val userId = call.parameters["userId"]!!
                 val recommendedShows = recommendationsController.getRecommendedShows(userId)
                 call.respond(recommendedShows)
@@ -122,8 +108,8 @@ fun main() {
 
 fun buildUsersRepository(): FollowedUsersRepository {
     val followedUsersRepository =  FollowedUsersRepositoryInMemory()
-    followedUsersRepository["user1"] = mutableListOf(
-        FollowedUser(id = "user2", followedDate = "20220210")
+    followedUsersRepository["1"] = mutableListOf(
+        FollowedUser(id = "2", followedDate = "20220210")
     )
     return followedUsersRepository
 }
@@ -132,32 +118,21 @@ fun buildReviewsRepository(): ReviewsRepository {
 
     val reviewsRepository = ReviewsRepositoryInMemory()
 
-    reviewsRepository["user1"] = mutableListOf(
+    reviewsRepository["1"] = mutableListOf(
         Review(showId = "6", rating = 1f, createdDate = "20220218")
     )
-    reviewsRepository["user2"] = mutableListOf(
+    reviewsRepository["2"] = mutableListOf(
         Review(showId = "1", rating = 1f, createdDate = "20220218"),
         Review(showId = "3", rating = 1f, createdDate = "20220218"),
         Review(showId = "5", rating = 0f, createdDate = "20220218"),
         Review(showId = "6", rating = 1f, createdDate = "20220218")
     )
-    reviewsRepository["user3"] = mutableListOf(
+    reviewsRepository["3"] = mutableListOf(
         Review(showId = "1", rating = 1f, createdDate = "20220218"),
         Review(showId = "6", rating = 1f, createdDate = "20220218")
     )
 
     return reviewsRepository
-}
-
-fun buildRecommendationsRepository(): RecommendationsRepository {
-    val recommendationsRepository = RecommendationsRepositoryInMemory()
-    recommendationsRepository["user1"] = listOf(
-        Recommendation(showId = "1", positiveReviewsQty = 1, negativeReviewsQty = 0),
-        Recommendation(showId = "3", positiveReviewsQty = 1, negativeReviewsQty = 1),
-        Recommendation(showId = "5", positiveReviewsQty = 0, negativeReviewsQty = 1),
-        Recommendation(showId = "6", positiveReviewsQty = 1, negativeReviewsQty = 0)
-    )
-    return recommendationsRepository
 }
 
 fun buildShowsRepository(): ShowsRepository{

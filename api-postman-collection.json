@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Calculate And Get Recomemndations",
+			"name": "Get Recomemndations",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {}
 			},
@@ -27,9 +27,9 @@
 					],
 					"variable": [
 						{
-							"description": "User id",
+							"description": "User Id",
 							"key": "userId",
-							"value": "user1"
+							"value": "1"
 						}
 					]
 				},
@@ -37,7 +37,7 @@
 			},
 			"response": [
 				{
-					"name": "Calculate And Get Recomemndations",
+					"name": "ok",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
@@ -55,88 +55,9 @@
 							],
 							"variable": [
 								{
-									"description": "User id",
-									"key": "userId",
-									"value": "user1"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "582"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"recommendations\": [\n        {\n            \"title\": \"The Gift\",\n            \"genres\": [\n                \"Thriller\"\n            ],\n            \"year\": \"2000\",\n            \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"title\": \"Harry Potter and the Philosopher's Stone\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2001\",\n            \"cover\": \"/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"title\": \"Harry Potter and the Chamber of Secrets\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2002\",\n            \"cover\": \"/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 0,\n            \"negative_reviews_qty\": 1\n        }\n    ]\n}"
-				}
-			]
-		},
-		{
-			"name": "Get Recomemndations",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/:userId/shows/recommended-preloaded",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						":userId",
-						"shows",
-						"recommended-preloaded"
-					],
-					"variable": [
-						{
-							"description": "User Id",
-							"key": "userId",
-							"value": "user1"
-						}
-					]
-				},
-				"description": "Get logged user's recommended shows based on her/his circle"
-			},
-			"response": [
-				{
-					"name": "Get Recomemndations",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/:userId/shows/recommended-preloaded",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								":userId",
-								"shows",
-								"recommended-preloaded"
-							],
-							"variable": [
-								{
 									"description": "User Id",
 									"key": "userId",
-									"value": "user1"
+									"value": "1"
 								}
 							]
 						}
@@ -147,7 +68,7 @@
 					"header": [
 						{
 							"key": "Content-Length",
-							"value": "582"
+							"value": "609"
 						},
 						{
 							"key": "Content-Type",
@@ -159,7 +80,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"recommendations\": [\n        {\n            \"title\": \"The Gift\",\n            \"genres\": [\n                \"Thriller\"\n            ],\n            \"year\": \"2000\",\n            \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"title\": \"Harry Potter and the Philosopher's Stone\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2001\",\n            \"cover\": \"/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 1\n        },\n        {\n            \"title\": \"Harry Potter and the Chamber of Secrets\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2002\",\n            \"cover\": \"/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 0,\n            \"negative_reviews_qty\": 1\n        }\n    ]\n}"
+					"body": "{\n    \"recommendations\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"The Gift\",\n            \"genres\": [\n                \"Thriller\"\n            ],\n            \"year\": \"2000\",\n            \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"id\": \"3\",\n            \"title\": \"Harry Potter and the Philosopher's Stone\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2001\",\n            \"cover\": \"/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"id\": \"5\",\n            \"title\": \"Harry Potter and the Chamber of Secrets\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2002\",\n            \"cover\": \"/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 0,\n            \"negative_reviews_qty\": 1\n        }\n    ]\n}"
 				}
 			]
 		},
@@ -199,7 +120,7 @@
 			},
 			"response": [
 				{
-					"name": "Get Show",
+					"name": "ok",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
@@ -246,7 +167,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\",\n    \"user_review\": null,\n    \"positive_reviews_qty\": 0,\n    \"negative_reviews_qty\": 0\n}"
+					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\",\n    \"user_review\": null,\n    \"positive_reviews_qty\": 1,\n    \"negative_reviews_qty\": 0\n}"
 				}
 			]
 		},
@@ -281,52 +202,7 @@
 			},
 			"response": [
 				{
-					"name": "Get Show (Unlogged users)",
-					"originalRequest": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/shows/:showId",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"shows",
-								":showId"
-							],
-							"variable": [
-								{
-									"description": "Show id",
-									"key": "showId",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Length",
-							"value": "437"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\"\n}"
-				},
-				{
-					"name": "Get Show (Unlogged users)",
+					"name": "ok",
 					"originalRequest": {
 						"method": "GET",
 						"header": [],
@@ -396,12 +272,12 @@
 						{
 							"description": "User id",
 							"key": "userId",
-							"value": "user1"
+							"value": "1"
 						},
 						{
 							"description": "Id of the followed user ",
 							"key": "followedUserId",
-							"value": "user3"
+							"value": "3"
 						}
 					]
 				},
@@ -409,7 +285,7 @@
 			},
 			"response": [
 				{
-					"name": "Follow User",
+					"name": "ok",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -429,12 +305,12 @@
 								{
 									"description": "User id",
 									"key": "userId",
-									"value": "user1"
+									"value": "1"
 								},
 								{
 									"description": "Id of the followed user ",
 									"key": "followedUserId",
-									"value": "user3"
+									"value": "3"
 								}
 							]
 						}
@@ -445,7 +321,7 @@
 					"header": [
 						{
 							"key": "Content-Length",
-							"value": "73"
+							"value": "69"
 						},
 						{
 							"key": "Content-Type",
@@ -457,7 +333,58 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"followed_user_id\": \"user3\",\n    \"followed_date\": \"2022-04-24T12:24:52.904455\"\n}"
+					"body": "{\n    \"followed_user_id\": \"3\",\n    \"followed_date\": \"2022-04-24T13:06:27.946070\"\n}"
+				},
+				{
+					"name": "already followed user",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"followedUsers",
+								":followedUserId"
+							],
+							"variable": [
+								{
+									"description": "User id",
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"description": "Id of the followed user ",
+									"key": "followedUserId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "102"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"detail_message\": \"User is already followed\",\n    \"cause\": null,\n    \"stack_trace\": [],\n    \"suppressed_exceptions\": []\n}"
 				}
 			]
 		},
@@ -484,12 +411,12 @@
 						{
 							"description": "User id",
 							"key": "userId",
-							"value": "user3"
+							"value": "1"
 						},
 						{
 							"description": "Show id",
 							"key": "showId",
-							"value": "MovieV"
+							"value": "1"
 						},
 						{
 							"description": "Review's rating (0: Negative, 1:Positive)",
@@ -502,7 +429,7 @@
 			},
 			"response": [
 				{
-					"name": "Add Review",
+					"name": "already added review",
 					"originalRequest": {
 						"method": "POST",
 						"header": [],
@@ -524,12 +451,70 @@
 								{
 									"description": "User id",
 									"key": "userId",
-									"value": "user3"
+									"value": "1"
 								},
 								{
 									"description": "Show id",
 									"key": "showId",
-									"value": "MovieV"
+									"value": "1"
+								},
+								{
+									"description": "Review's rating (0: Negative, 1:Positive)",
+									"key": "rating",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "103"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"detail_message\": \"Show was already reviewed\",\n    \"cause\": null,\n    \"stack_trace\": [],\n    \"suppressed_exceptions\": []\n}"
+				},
+				{
+					"name": "ok",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"shows",
+								":showId",
+								"review",
+								":rating"
+							],
+							"variable": [
+								{
+									"description": "User id",
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"description": "Show id",
+									"key": "showId",
+									"value": "1"
 								},
 								{
 									"description": "Review's rating (0: Negative, 1:Positive)",
@@ -545,7 +530,7 @@
 					"header": [
 						{
 							"key": "Content-Length",
-							"value": "51"
+							"value": "42"
 						},
 						{
 							"key": "Content-Type",
@@ -557,7 +542,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"user_id\": \"user3\",\n    \"show_id\": \"MovieV\",\n    \"rating\": 1\n}"
+					"body": "{\n    \"user_id\": \"1\",\n    \"show_id\": \"1\",\n    \"rating\": 1\n}"
 				}
 			]
 		}

@@ -9,76 +9,16 @@ paths:
     get:
       tags:
         - default
-      summary: Calculate And Get Recomemndations
-      description: Get logged user's recommended shows based on her/his circle
-      parameters:
-        - name: userId
-          in: path
-          schema:
-            type: string
-          required: true
-          description: User id
-          example: user1
-      responses:
-        '200':
-          description: OK
-          headers:
-            Content-Length:
-              schema:
-                type: integer
-                example: '582'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
-            Connection:
-              schema:
-                type: string
-                example: keep-alive
-          content:
-            application/json:
-              schema:
-                type: object
-              example:
-                recommendations:
-                  - title: The Gift
-                    genres:
-                      - Thriller
-                    year: '2000'
-                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
-                    type: MOVIE
-                    positive_reviews_qty: 1
-                    negative_reviews_qty: 0
-                  - title: Harry Potter and the Philosopher's Stone
-                    genres:
-                      - Fantasy
-                    year: '2001'
-                    cover: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
-                    type: MOVIE
-                    positive_reviews_qty: 1
-                    negative_reviews_qty: 0
-                  - title: Harry Potter and the Chamber of Secrets
-                    genres:
-                      - Fantasy
-                    year: '2002'
-                    cover: /sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg
-                    type: MOVIE
-                    positive_reviews_qty: 0
-                    negative_reviews_qty: 1
-  /{userId}/shows/recommended-preloaded:
-    get:
-      tags:
-        - default
       summary: Get Recomemndations
       description: Get logged user's recommended shows based on her/his circle
       parameters:
         - name: userId
           in: path
           schema:
-            type: string
+            type: integer
           required: true
           description: User Id
-          example: user1
+          example: '1'
       responses:
         '200':
           description: OK
@@ -86,7 +26,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '582'
+                example: '609'
             Content-Type:
               schema:
                 type: string
@@ -101,7 +41,8 @@ paths:
                 type: object
               example:
                 recommendations:
-                  - title: The Gift
+                  - id: '1'
+                    title: The Gift
                     genres:
                       - Thriller
                     year: '2000'
@@ -109,15 +50,17 @@ paths:
                     type: MOVIE
                     positive_reviews_qty: 1
                     negative_reviews_qty: 0
-                  - title: Harry Potter and the Philosopher's Stone
+                  - id: '3'
+                    title: Harry Potter and the Philosopher's Stone
                     genres:
                       - Fantasy
                     year: '2001'
                     cover: /wuMc08IPKEatf9rnMNXvIDxqP4W.jpg
                     type: MOVIE
                     positive_reviews_qty: 1
-                    negative_reviews_qty: 1
-                  - title: Harry Potter and the Chamber of Secrets
+                    negative_reviews_qty: 0
+                  - id: '5'
+                    title: Harry Potter and the Chamber of Secrets
                     genres:
                       - Fantasy
                     year: '2002'
@@ -180,7 +123,7 @@ paths:
                   chained and in a pond. Her visions lead to the body and the
                   arrest of an abusive husband, but did he really do it?
                 user_review: null
-                positive_reviews_qty: 0
+                positive_reviews_qty: 1
                 negative_reviews_qty: 0
   /shows/{showId}:
     get:
@@ -216,41 +159,20 @@ paths:
             application/json:
               schema:
                 type: object
-              examples:
-                example-0:
-                  summary: Get Show (Unlogged users)
-                  value:
-                    id: '1'
-                    title: The Gift
-                    genres:
-                      - Thriller
-                    year: '2000'
-                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
-                    type: MOVIE
-                    overview: >-
-                      When a local woman disappears and the police can't seem to
-                      find any leads, her father turns to a poor young woman
-                      with psychic powers. Slowly she starts having visions of
-                      the woman chained and in a pond. Her visions lead to the
-                      body and the arrest of an abusive husband, but did he
-                      really do it?
-                example-1:
-                  summary: Get Show (Unlogged users)
-                  value:
-                    id: '1'
-                    title: The Gift
-                    genres:
-                      - Thriller
-                    year: '2000'
-                    cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
-                    type: MOVIE
-                    overview: >-
-                      When a local woman disappears and the police can't seem to
-                      find any leads, her father turns to a poor young woman
-                      with psychic powers. Slowly she starts having visions of
-                      the woman chained and in a pond. Her visions lead to the
-                      body and the arrest of an abusive husband, but did he
-                      really do it?
+              example:
+                id: '1'
+                title: The Gift
+                genres:
+                  - Thriller
+                year: '2000'
+                cover: /nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg
+                type: MOVIE
+                overview: >-
+                  When a local woman disappears and the police can't seem to
+                  find any leads, her father turns to a poor young woman with
+                  psychic powers. Slowly she starts having visions of the woman
+                  chained and in a pond. Her visions lead to the body and the
+                  arrest of an abusive husband, but did he really do it?
   /{userId}/followedUsers/{followedUserId}:
     post:
       tags:
@@ -263,17 +185,17 @@ paths:
         - name: userId
           in: path
           schema:
-            type: string
+            type: integer
           required: true
           description: User id
-          example: user1
+          example: '1'
         - name: followedUserId
           in: path
           schema:
-            type: string
+            type: integer
           required: true
           description: 'Id of the followed user '
-          example: user3
+          example: '3'
       responses:
         '200':
           description: OK
@@ -281,7 +203,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '73'
+                example: '69'
             Content-Type:
               schema:
                 type: string
@@ -295,8 +217,32 @@ paths:
               schema:
                 type: object
               example:
-                followed_user_id: user3
-                followed_date: '2022-04-24T12:24:52.904455'
+                followed_user_id: '3'
+                followed_date: '2022-04-24T13:06:27.946070'
+        '400':
+          description: Bad Request
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '102'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                detail_message: User is already followed
+                cause: null
+                stack_trace: []
+                suppressed_exceptions: []
   /{userId}/shows/{showId}/review/{rating}:
     post:
       tags:
@@ -309,17 +255,17 @@ paths:
         - name: userId
           in: path
           schema:
-            type: string
+            type: integer
           required: true
           description: User id
-          example: user3
+          example: '1'
         - name: showId
           in: path
           schema:
-            type: string
+            type: integer
           required: true
           description: Show id
-          example: MovieV
+          example: '1'
         - name: rating
           in: path
           schema:
@@ -334,7 +280,7 @@ paths:
             Content-Length:
               schema:
                 type: integer
-                example: '51'
+                example: '42'
             Content-Type:
               schema:
                 type: string
@@ -348,6 +294,30 @@ paths:
               schema:
                 type: object
               example:
-                user_id: user3
-                show_id: MovieV
+                user_id: '1'
+                show_id: '1'
                 rating: 1
+        '400':
+          description: Bad Request
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '103'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                detail_message: Show was already reviewed
+                cause: null
+                stack_trace: []
+                suppressed_exceptions: []

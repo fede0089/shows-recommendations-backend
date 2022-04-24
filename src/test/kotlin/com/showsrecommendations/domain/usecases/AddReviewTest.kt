@@ -1,8 +1,5 @@
 package com.showsrecommendations.domain.usecases
 
-import com.showsrecommendations.adapters.repositories.inmemory.RecommendationsRepositoryInMemory
-import com.showsrecommendations.adapters.repositories.inmemory.ReviewsRepositoryInMemory
-import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import io.mockk.every

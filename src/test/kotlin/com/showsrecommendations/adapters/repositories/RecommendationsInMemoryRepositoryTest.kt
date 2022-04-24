@@ -1,36 +1,34 @@
-package com.showsrecommendations.domain.usecases
+package com.showsrecommendations.adapters.repositories
 
+import com.showsrecommendations.adapters.repositories.inmemory.RecommendationsRepositoryInMemory
 import com.showsrecommendations.domain.entities.FollowedUser
+import com.showsrecommendations.domain.entities.Recommendation
 import com.showsrecommendations.domain.entities.Review
-import com.showsrecommendations.domain.entities.Show
 import com.showsrecommendations.domain.ports.FollowedUsersRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
-import com.showsrecommendations.domain.ports.ShowsRepository
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
 
 import org.junit.jupiter.api.Assertions.*
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-class CalculateAndGetRecommendationsTest : Spek({
 
-    Feature("2.1 CalculateAndGetRecommendations") {
+class RecommendationsInMemoryRepositoryTest : Spek({
+
+    Feature("GetRecommendations") {
 
         val reviewsRepository = mockk<ReviewsRepository>(relaxed = true)
-        val showsRepository = mockk<ShowsRepository>(relaxed = true)
         val followedUsersRepository = mockk<FollowedUsersRepository>(relaxed = true)
 
-        val calculateAndGetRecommendations = CalculateAndGetRecommendations(
+        val recommendationsRepository = RecommendationsRepositoryInMemory(
             followedUsersRepository = followedUsersRepository,
-            reviewsRepository = reviewsRepository,
-            showsRepository = showsRepository
+            reviewsRepository = reviewsRepository
         )
 
-        var recommendedShows: List<CalculateAndGetRecommendations.RecommendedShow> = listOf()
+        var recommendedShows: List<Recommendation> = listOf()
 
-        Scenario("2.1.1 Calculating and getting recommendations") {
+        Scenario("Getting recommendations") {
 
             Given("user1 that is following user2, user3, user4, user5 and user6 ") {
                 every {
@@ -90,43 +88,27 @@ class CalculateAndGetRecommendationsTest : Spek({
                 )
             }
 
-            And("a shows repository"){
-                val showIdSlot = slot<String>()
-                every {
-                    showsRepository.getShow(id = capture(showIdSlot))
-                } answers {
-                    Show(
-                        id = showIdSlot.captured,
-                        title = showIdSlot.captured,
-                        genres = listOf(""),
-                        year = "unnecessary",
-                        cover = "unnecessary",
-                        type = "unnecessary",
-                        overview = "unnecessary",
-                        imdbId = "unnecessary",
-                        externalId = "unnecessary"
-                    )
-                }
-            }
-
             When("user1 gets its recommendations") {
-                recommendedShows = calculateAndGetRecommendations(CalculateAndGetRecommendations.Request(userId = "user1")).recommendations
+                recommendedShows = recommendationsRepository.getRecommendations(userId = "user1")
             }
 
-            Then("user1 sees Movie I with 4 recommendations, Movie III with 4 recommendations and 1 un-recommendation and Movie V with 1 recommendation and 1 un-recommendation") {
+            Then("user1 gets Movie I with 4 recommendations, Movie III with 4 recommendations and 1 un-recommendation, Movie V with 1 recommendation and 1 un-recommendation and Movie VI with 1 recommendation") {
                 val expectedRecommendedShows = listOf(
-                    CalculateAndGetRecommendations.RecommendedShow(
-                        title = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0, genres = listOf(""), year = "unnecessary", cover = "unnecessary", type = "unnecessary"
+                    Recommendation(
+                         showId = "MovieI", positiveReviewsQty = 4, negativeReviewsQty = 0
                     ),
-                    CalculateAndGetRecommendations.RecommendedShow(
-                        title = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1, genres = listOf(""), year = "unnecessary", cover = "unnecessary", type = "unnecessary"
+                    Recommendation(
+                        showId = "MovieIII", positiveReviewsQty = 4, negativeReviewsQty = 1
                     ),
-                    CalculateAndGetRecommendations.RecommendedShow(
-                        title = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1, genres = listOf(""), year = "unnecessary", cover = "unnecessary", type = "unnecessary"
+                    Recommendation(
+                        showId = "MovieVI", positiveReviewsQty = 1, negativeReviewsQty = 0
+                    ),
+                    Recommendation(
+                        showId = "MovieV", positiveReviewsQty = 1, negativeReviewsQty = 1
                     )
                 )
-                assertEquals(3, recommendedShows.size)
-                assertEquals(expectedRecommendedShows, recommendedShows)
+                assertEquals(4, recommendedShows.size)
+                assertTrue(recommendedShows.containsAll(expectedRecommendedShows))
             }
         }
     }

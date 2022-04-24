@@ -7,10 +7,10 @@ import com.showsrecommendations.domain.ports.FollowedUsersRepository
 import com.showsrecommendations.domain.ports.UsersRepository
 import java.time.LocalDateTime
 
-class FollowedUsersRepositoryInMemory(val followedUsers: MutableMap<String, MutableList<FollowedUser>> = mutableMapOf()): FollowedUsersRepository, MutableMap<String, MutableList<FollowedUser>> by followedUsers {
+class FollowedUsersRepositoryInMemory(private val followedUsers: MutableMap<String, MutableList<FollowedUser>> = mutableMapOf()): FollowedUsersRepository, MutableMap<String, MutableList<FollowedUser>> by followedUsers {
 
     override fun getFollowedUsers(userId: String): List<FollowedUser> =
-        followedUsers[userId]!!
+        followedUsers[userId]?: emptyList()
 
     override fun getFollowedUser(userId: String, followedUserId: String): FollowedUser? =
         getFollowedUsers(userId).find { it.id == followedUserId }
