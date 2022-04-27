@@ -1,5 +1,4 @@
 package com.showsrecommendations.domain.usecases
-import com.showsrecommendations.domain.entities.Show
 import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.ShowsRepository
@@ -13,18 +12,19 @@ class GetRecommendations(private val recommendationsRepository: RecommendationsR
         val seenShows = reviewsRepository.getReviews(getRecommendationsRequest.userId).map { it.showId }
         val recommendations = recommendationsRepository.getRecommendations(userId = getRecommendationsRequest.userId)
             .filterNot { it.showId in seenShows }
-            .map{
-                val show: Show = showsRepository.getShow(it.showId)
-                RecommendedShow(
-                    id = show.id,
-                    title = show.title,
-                    genres = show.genres,
-                    year = show.year,
-                    cover = show.cover,
-                    type = show.type,
-                    positiveReviewsQty = it.positiveReviewsQty,
-                    negativeReviewsQty = it.negativeReviewsQty
-                )
+            .mapNotNull{
+                showsRepository.getShow(it.showId)?.let{ show ->
+                    RecommendedShow(
+                        id = show.id,
+                        title = show.title,
+                        genres = show.genres,
+                        year = show.year,
+                        cover = show.cover,
+                        type = show.type,
+                        positiveReviewsQty = it.positiveReviewsQty,
+                        negativeReviewsQty = it.negativeReviewsQty
+                    )
+                }
             }
             .sortedBy { it.negativeReviewsQty - it.positiveReviewsQty }
 

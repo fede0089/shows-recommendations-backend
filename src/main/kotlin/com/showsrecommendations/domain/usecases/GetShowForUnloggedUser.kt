@@ -1,11 +1,13 @@
 package com.showsrecommendations.domain.usecases
 
 import com.showsrecommendations.domain.ports.ShowsRepository
+import io.ktor.server.plugins.*
 
 class GetShowForUnloggedUser(private val showsRepository: ShowsRepository): UseCase<GetShowForUnloggedUser.Request, GetShowForUnloggedUser.Response> {
 
     override operator fun invoke(getShowRequest: Request): Response {
-        val show = showsRepository.getShow(getShowRequest.showId)
+        val show = showsRepository.getShow(getShowRequest.showId) ?: throw NotFoundException(message = "Show not found")
+
         return Response(
             id = show.id,
             title = show.title,

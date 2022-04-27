@@ -13,10 +13,10 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 class AddReviewTest : Spek({
 
-    Feature("2.2 AddReview") {
+    Feature("AddReview") {
 
 
-        Scenario("2.2/2.3 Reviewing an unseen show") {
+        Scenario("Reviewing an unseen show") {
 
             val reviewsRepository = mockk<ReviewsRepository>(relaxed = true)
             val addReview = AddReview(reviewsRepository = reviewsRepository)

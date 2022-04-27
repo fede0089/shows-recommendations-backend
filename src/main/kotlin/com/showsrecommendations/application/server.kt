@@ -57,6 +57,10 @@ fun main() {
             exception<BadRequestException>{ call, cause ->
                 call.respond(HttpStatusCode.BadRequest, cause)
             }
+
+            exception<NotFoundException>{ call, cause ->
+                call.respond(HttpStatusCode.NotFound)
+            }
         }
 
         install(ContentNegotiation) {

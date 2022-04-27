@@ -3,6 +3,7 @@ package com.showsrecommendations.domain.usecases
 import com.showsrecommendations.domain.ports.RecommendationsRepository
 import com.showsrecommendations.domain.ports.ReviewsRepository
 import com.showsrecommendations.domain.ports.ShowsRepository
+import io.ktor.server.plugins.*
 
 class GetShowForLoggedUser(
     private val showsRepository: ShowsRepository,
@@ -11,7 +12,7 @@ class GetShowForLoggedUser(
 ): UseCase<GetShowForLoggedUser.Request, GetShowForLoggedUser.Response> {
 
     override operator fun invoke(getShowRequest: Request): Response {
-        val show = showsRepository.getShow(getShowRequest.showId)
+        val show = showsRepository.getShow(getShowRequest.showId) ?: throw NotFoundException(message = "Show not found")
         val recommendation = recommendationsRepository.getRecommendation(userId = getShowRequest.userId, showId = getShowRequest.showId)
         val userReview = reviewsRepository.getReview(userId = getShowRequest.userId, showId = getShowRequest.showId)
         return Response(
