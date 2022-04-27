@@ -1,19 +1,25 @@
 package com.showsrecommendations.application
 
 import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
-import com.showsrecommendations.adapters.controllers.RecommendationsController
-import com.showsrecommendations.adapters.controllers.ReviewController
-import com.showsrecommendations.adapters.controllers.FollowedUsersController
-import com.showsrecommendations.adapters.controllers.ShowController
-import com.showsrecommendations.adapters.repositories.inmemory.*
-import com.showsrecommendations.domain.entities.FollowedUser
-import com.showsrecommendations.domain.entities.Review
-import com.showsrecommendations.domain.entities.Show
-import com.showsrecommendations.domain.ports.FollowedUsersRepository
-import com.showsrecommendations.domain.ports.ReviewsRepository
-import com.showsrecommendations.domain.ports.ShowsRepository
-import com.showsrecommendations.domain.usecases.*
+import com.showsrecommendations.recommendations.adapters.controllers.RecommendationsController
+import com.showsrecommendations.reviews.adapters.controllers.ReviewController
+import com.showsrecommendations.users.adapters.controllers.FollowedUsersController
+import com.showsrecommendations.shows.adapters.controllers.ShowController
+import com.showsrecommendations.users.domain.entities.FollowedUser
+import com.showsrecommendations.reviews.domain.entities.Review
+import com.showsrecommendations.shows.domain.entities.Show
+import com.showsrecommendations.users.domain.ports.FollowedUsersRepository
+import com.showsrecommendations.reviews.domain.ports.ReviewsRepository
+import com.showsrecommendations.shows.domain.ports.ShowsRepository
+import com.showsrecommendations.recommendations.adapters.repositories.RecommendationsRepositoryInMemory
+import com.showsrecommendations.recommendations.domain.usecases.GetRecommendations
+import com.showsrecommendations.reviews.adapters.repositories.ReviewsRepositoryInMemory
+import com.showsrecommendations.reviews.domain.usecases.AddReview
+import com.showsrecommendations.shows.adapters.repositories.ShowsRepositoryInMemory
+import com.showsrecommendations.shows.domain.usecases.GetShowForLoggedUser
+import com.showsrecommendations.shows.domain.usecases.GetShowForUnloggedUser
+import com.showsrecommendations.users.adapters.repositories.FollowedUsersRepositoryInMemory
+import com.showsrecommendations.users.domain.usecases.FollowUser
 import io.ktor.http.*
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
@@ -139,7 +145,7 @@ fun buildReviewsRepository(): ReviewsRepository {
     return reviewsRepository
 }
 
-fun buildShowsRepository(): ShowsRepository{
+fun buildShowsRepository(): ShowsRepository {
     val showsRepository = ShowsRepositoryInMemory()
     showsRepository["1"] = Show(id = "1", title = "The Gift", overview = "When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?",genres = listOf("Thriller"), year = "2000", cover = "/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg", type = "MOVIE", imdbId = "tt0219699" ,externalId = "tmdb#2046")
     showsRepository["3"] = Show(id = "3", title = "Harry Potter and the Philosopher's Stone", overview = "Harry Potter has lived under the stairs at his aunt and uncle's house his whole life. But on his 11th birthday, he learns he's a powerful wizard—with a place waiting for him at the Hogwarts School of Witchcraft and Wizardry. As he learns to harness his newfound powers with the help of the school's kindly headmaster, Harry uncovers the truth about his parents' deaths—and about the villain who's to blame.", genres = listOf("Fantasy"), year = "2001", cover = "/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg", type = "MOVIE", imdbId = "tt0241527", externalId = "tmdb#671")
