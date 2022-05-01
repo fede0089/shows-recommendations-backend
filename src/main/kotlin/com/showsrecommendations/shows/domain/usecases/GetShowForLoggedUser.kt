@@ -24,7 +24,7 @@ class GetShowForLoggedUser(
             cover = show.cover,
             type = show.type,
             overview = show.overview,
-            userReview = userReview?.rating,
+            userReview = userReview?.let{ UserReview(rating = it.rating, createdDate = it.createdDate)},
             positiveReviewsQty = recommendation?.positiveReviewsQty?:0,
             negativeReviewsQty = recommendation?.negativeReviewsQty?:0,
         )
@@ -38,7 +38,10 @@ class GetShowForLoggedUser(
                         val cover:String,
                         val type:String,
                         val overview:String,
-                        val userReview: Float?,
+                        val userReview: UserReview?,
                         val positiveReviewsQty:Int,
                         val negativeReviewsQty: Int)
+
+    data class UserReview(val rating:Float,
+                          val createdDate:String)
 }
