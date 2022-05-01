@@ -78,13 +78,13 @@ fun main() {
 
         routing {
 
-            get("/{userId}/shows/recommended") {
+            get("/users/{userId}/shows/recommended") {
                 val userId = call.parameters["userId"]!!
                 val recommendedShows = recommendationsController.getRecommendedShows(userId)
                 call.respond(recommendedShows)
             }
 
-            get("/{userId}/shows/{showId}") {
+            get("/users/{userId}/shows/{showId}") {
                 val userId = call.parameters["userId"]!!
                 val showId = call.parameters["showId"]!!
                 val getShowResponse = showController.getShow(userId = userId, showId = showId) //fixme its using recomms repository (pre-loaded)
@@ -97,7 +97,7 @@ fun main() {
                 call.respond(getShowResponse)
             }
 
-            post("/{userId}/shows/{showId}/review/{rating}") {
+            post("/users/{userId}/shows/{showId}/review/{rating}") {
                 val userId = call.parameters["userId"]!!
                 val showId = call.parameters["showId"]!!
                 val rating = call.parameters["rating"]!!?.toFloat()
@@ -105,7 +105,7 @@ fun main() {
                 call.respond(addReviewResponse)
             }
 
-            post("/{userId}/followedUsers/{followedUserId}") {
+            post("/users/{userId}/followedUsers/{followedUserId}") {
                 val userId = call.parameters["userId"]!!
                 val followedUserId = call.parameters["followedUserId"]!!
                 val followUserResponse = followedUsersController.followUser(userId = userId, followedUserId = followedUserId)

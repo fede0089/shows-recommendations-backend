@@ -14,20 +14,20 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/:userId/shows/recommended",
+					"raw": "http://localhost:8080/users/:userId/shows/recommended",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"users",
 						":userId",
 						"shows",
 						"recommended"
 					],
 					"variable": [
 						{
-							"description": "User Id",
 							"key": "userId",
 							"value": "1"
 						}
@@ -93,13 +93,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/:userId/shows/:showId",
+					"raw": "http://localhost:8080/users/:userId/shows/:showId",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"users",
 						":userId",
 						"shows",
 						":showId"
@@ -255,25 +256,24 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/:userId/followedUsers/:followedUserId",
+					"raw": "http://localhost:8080/users/:userId/followedUsers/:followedUserId",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"users",
 						":userId",
 						"followedUsers",
 						":followedUserId"
 					],
 					"variable": [
 						{
-							"description": "User id",
 							"key": "userId",
 							"value": "1"
 						},
 						{
-							"description": "Id of the followed user ",
 							"key": "followedUserId",
 							"value": "3"
 						}
@@ -392,13 +392,14 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+					"raw": "http://localhost:8080/users/:userId/shows/:showId/review/:rating",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
+						"users",
 						":userId",
 						"shows",
 						":showId",
@@ -407,12 +408,10 @@
 					],
 					"variable": [
 						{
-							"description": "User id",
 							"key": "userId",
-							"value": "1"
+							"value": ""
 						},
 						{
-							"description": "Show id",
 							"key": "showId",
 							"value": "1"
 						},

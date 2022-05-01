@@ -5,7 +5,7 @@ info:
 servers:
   - url: http://localhost:8080
 paths:
-  /{userId}/shows/recommended:
+  /users/{userId}/shows/recommended:
     get:
       tags:
         - default
@@ -17,7 +17,6 @@ paths:
           schema:
             type: integer
           required: true
-          description: User Id
           example: '1'
       responses:
         '200':
@@ -68,7 +67,7 @@ paths:
                     type: MOVIE
                     positive_reviews_qty: 0
                     negative_reviews_qty: 1
-  /{userId}/shows/{showId}:
+  /users/{userId}/shows/{showId}:
     get:
       tags:
         - default
@@ -174,7 +173,7 @@ paths:
                   psychic powers. Slowly she starts having visions of the woman
                   chained and in a pond. Her visions lead to the body and the
                   arrest of an abusive husband, but did he really do it?
-  /{userId}/followedUsers/{followedUserId}:
+  /users/{userId}/followedUsers/{followedUserId}:
     post:
       tags:
         - default
@@ -188,14 +187,12 @@ paths:
           schema:
             type: integer
           required: true
-          description: User id
           example: '1'
         - name: followedUserId
           in: path
           schema:
             type: integer
           required: true
-          description: 'Id of the followed user '
           example: '3'
       responses:
         '200':
@@ -244,7 +241,7 @@ paths:
                 cause: null
                 stack_trace: []
                 suppressed_exceptions: []
-  /{userId}/shows/{showId}/review/{rating}:
+  /users/{userId}/shows/{showId}/review/{rating}:
     post:
       tags:
         - default
@@ -256,16 +253,13 @@ paths:
         - name: userId
           in: path
           schema:
-            type: integer
+            type: string
           required: true
-          description: User id
-          example: '1'
         - name: showId
           in: path
           schema:
             type: integer
           required: true
-          description: Show id
           example: '1'
         - name: rating
           in: path
