@@ -80,7 +80,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"recommendations\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"The Gift\",\n            \"genres\": [\n                \"Thriller\"\n            ],\n            \"year\": \"2000\",\n            \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"id\": \"3\",\n            \"title\": \"Harry Potter and the Philosopher's Stone\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2001\",\n            \"cover\": \"/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"id\": \"5\",\n            \"title\": \"Harry Potter and the Chamber of Secrets\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2002\",\n            \"cover\": \"/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 0,\n            \"negative_reviews_qty\": 1\n        }\n    ]\n}"
+					"body": "{\n    \"recommendations\": [\n        {\n            \"id\": \"3\",\n            \"title\": \"Harry Potter and the Philosopher's Stone\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2001\",\n            \"cover\": \"https://image.tmdb.org/t/p/w500/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 1,\n            \"negative_reviews_qty\": 0\n        },\n        {\n            \"id\": \"5\",\n            \"title\": \"Harry Potter and the Chamber of Secrets\",\n            \"genres\": [\n                \"Fantasy\"\n            ],\n            \"year\": \"2002\",\n            \"cover\": \"https://image.tmdb.org/t/p/w500/sdEOH0992YZ0QSxgXNIGLq1ToUi.jpg\",\n            \"type\": \"MOVIE\",\n            \"positive_reviews_qty\": 0,\n            \"negative_reviews_qty\": 1\n        }\n    ]\n}"
 				}
 			]
 		},
@@ -166,7 +166,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\",\n    \"user_review\": {\n        \"rating\": 1,\n        \"created_date\": \"2022-05-01T10:03:52.860516\"\n    },\n    \"positive_reviews_qty\": 1,\n    \"negative_reviews_qty\": 0\n}"
+					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"https://image.tmdb.org/t/p/w500/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\",\n    \"user_review\": {\n        \"rating\": 1.0,\n        \"created_date\": \"2022-05-01T10:15:51.610892\"\n    },\n    \"positive_reviews_qty\": 1,\n    \"negative_reviews_qty\": 0\n}"
 				}
 			]
 		},
@@ -243,7 +243,7 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\"\n}"
+					"body": "{\n    \"id\": \"1\",\n    \"title\": \"The Gift\",\n    \"genres\": [\n        \"Thriller\"\n    ],\n    \"year\": \"2000\",\n    \"cover\": \"https://image.tmdb.org/t/p/w500/nQdBE1P0r4ZrgGqy5EX8sL2kXG6.jpg\",\n    \"type\": \"MOVIE\",\n    \"overview\": \"When a local woman disappears and the police can't seem to find any leads, her father turns to a poor young woman with psychic powers. Slowly she starts having visions of the woman chained and in a pond. Her visions lead to the body and the arrest of an abusive husband, but did he really do it?\"\n}"
 				}
 			]
 		},
@@ -409,7 +409,7 @@
 					"variable": [
 						{
 							"key": "userId",
-							"value": ""
+							"value": "1"
 						},
 						{
 							"key": "showId",
