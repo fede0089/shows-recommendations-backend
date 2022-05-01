@@ -23,7 +23,7 @@ class AddReviewTest : Spek({
             val addReview = AddReview(reviewsRepository = reviewsRepository)
             lateinit var addReviewRequest: AddReview.Request
 
-            Given("A positive review request from user 1 on movie 1") {
+            Given("A positive review request from user 1 on show 1") {
                 addReviewRequest = AddReview.Request(
                     userId = "1",
                     showId = "1",
@@ -32,7 +32,7 @@ class AddReviewTest : Spek({
 
             }
 
-            And("User1 has no previous reviews") {
+            And("user 1 has no previous reviews") {
                 every {
                     reviewsRepository.getReview(
                         userId = addReviewRequest.userId,
@@ -65,7 +65,7 @@ class AddReviewTest : Spek({
             lateinit var exception: Throwable
 
 
-            Given("A positive review request from user 1 on movie 1") {
+            Given("A positive review request from user 1 on show 1") {
                 addReviewRequest = AddReview.Request(
                     userId = "1",
                     showId = "1",
@@ -74,7 +74,7 @@ class AddReviewTest : Spek({
 
             }
 
-            And("user 1 has a previous review on movie 1") {
+            And("user 1 has a previous review on show 1") {
                 every {
                     reviewsRepository.getReview(
                         userId = addReviewRequest.userId,

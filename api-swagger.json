@@ -285,7 +285,6 @@ paths:
               schema:
                 type: object
               example:
-                user_id: '1'
                 show_id: '1'
                 rating: 1
         '400':
@@ -312,3 +311,88 @@ paths:
                 cause: null
                 stack_trace: []
                 suppressed_exceptions: []
+  /users/{userId}/shows/{showId}/review:
+    delete:
+      tags:
+        - default
+      summary: Undo Review
+      description: Undo/removes a logged user review of a show
+      parameters:
+        - name: userId
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+        - name: showId
+          in: path
+          schema:
+            type: integer
+          required: true
+          example: '1'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '72'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: ok
+                  value:
+                    show_id: '1'
+                    rating: 1
+                    created_date: '2022-05-01T10:46:25.319339'
+                example-1:
+                  summary: ok
+                  value:
+                    show_id: '1'
+                    rating: 1
+        '400':
+          description: Bad Request
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                example: '111'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+            Connection:
+              schema:
+                type: string
+                example: keep-alive
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                example-0:
+                  summary: not reviewed show
+                  value:
+                    detail_message: The show was not reviewed by user
+                    cause: null
+                    stack_trace: []
+                    suppressed_exceptions: []
+                example-1:
+                  summary: already added review
+                  value:
+                    detail_message: Show was already reviewed
+                    cause: null
+                    stack_trace: []
+                    suppressed_exceptions: []

@@ -15,6 +15,7 @@ import com.showsrecommendations.recommendations.adapters.repositories.Recommenda
 import com.showsrecommendations.recommendations.domain.usecases.GetRecommendations
 import com.showsrecommendations.reviews.adapters.repositories.ReviewsRepositoryInMemory
 import com.showsrecommendations.reviews.domain.usecases.AddReview
+import com.showsrecommendations.reviews.domain.usecases.UndoReview
 import com.showsrecommendations.shows.adapters.repositories.ShowsRepositoryInMemory
 import com.showsrecommendations.shows.domain.usecases.GetShowForLoggedUser
 import com.showsrecommendations.shows.domain.usecases.GetShowForUnloggedUser
@@ -46,13 +47,14 @@ fun main() {
         showsRepository = showsRepository
     )
     val addReview = AddReview(reviewsRepository = reviewsRepository)
+    val undoReview = UndoReview(reviewsRepository = reviewsRepository)
     val followUser = FollowUser(followedUsersRepository = followedUsersRepository)
     val getShowForUnLoggedUser = GetShowForUnloggedUser(showsRepository = showsRepository)
     val getShowForLoggedUser = GetShowForLoggedUser(showsRepository = showsRepository, reviewsRepository = reviewsRepository, recommendationsRepository = recommendationsRepository )
 
     //controllers
     val recommendationsController = RecommendationsController(getRecommendations = getRecommendations)
-    val reviewController = ReviewController(addReview = addReview)
+    val reviewController = ReviewController(addReview = addReview, undoReview = undoReview)
     val followedUsersController = FollowedUsersController(followUser = followUser)
     val showController = ShowController(getShowForUnloggedUser = getShowForUnLoggedUser, getShowForLoggedUser = getShowForLoggedUser)
 
@@ -103,6 +105,13 @@ fun main() {
                 val rating = call.parameters["rating"]!!?.toFloat()
                 val addReviewResponse = reviewController.addReview(userId, showId, rating)
                 call.respond(addReviewResponse)
+            }
+
+            delete("/users/{userId}/shows/{showId}/review") {
+                val userId = call.parameters["userId"]!!
+                val showId = call.parameters["showId"]!!
+                val undoReviewResponse = reviewController.undoReview(userId, showId)
+                call.respond(undoReviewResponse)
             }
 
             post("/users/{userId}/followedUsers/{followedUserId}") {

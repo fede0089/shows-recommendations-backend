@@ -539,7 +539,260 @@
 						}
 					],
 					"cookie": [],
-					"body": "{\n    \"user_id\": \"1\",\n    \"show_id\": \"1\",\n    \"rating\": 1\n}"
+					"body": "{\n    \"show_id\": \"1\",\n    \"rating\": 1.0\n}"
+				}
+			]
+		},
+		{
+			"name": "Undo Review",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/:userId/shows/:showId/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						":userId",
+						"shows",
+						":showId",
+						"review"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "showId",
+							"value": "1"
+						}
+					]
+				},
+				"description": "Undo/removes a logged user review of a show"
+			},
+			"response": [
+				{
+					"name": "not reviewed show",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/:userId/shows/:showId/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								":userId",
+								"shows",
+								":showId",
+								"review"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "showId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "111"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"detail_message\": \"The show was not reviewed by user\",\n    \"cause\": null,\n    \"stack_trace\": [],\n    \"suppressed_exceptions\": []\n}"
+				},
+				{
+					"name": "ok",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/:userId/shows/:showId/review",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								":userId",
+								"shows",
+								":showId",
+								"review"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"key": "showId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "72"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"show_id\": \"1\",\n    \"rating\": 1,\n    \"created_date\": \"2022-05-01T10:46:25.319339\"\n}"
+				},
+				{
+					"name": "ok",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"shows",
+								":showId",
+								"review",
+								":rating"
+							],
+							"variable": [
+								{
+									"description": "User id",
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"description": "Show id",
+									"key": "showId",
+									"value": "1"
+								},
+								{
+									"description": "Review's rating (0: Negative, 1:Positive)",
+									"key": "rating",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "42"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"show_id\": \"1\",\n    \"rating\": 1.0\n}"
+				},
+				{
+					"name": "already added review",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/:userId/shows/:showId/review/:rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								":userId",
+								"shows",
+								":showId",
+								"review",
+								":rating"
+							],
+							"variable": [
+								{
+									"description": "User id",
+									"key": "userId",
+									"value": "1"
+								},
+								{
+									"description": "Show id",
+									"key": "showId",
+									"value": "1"
+								},
+								{
+									"description": "Review's rating (0: Negative, 1:Positive)",
+									"key": "rating",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "103"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"detail_message\": \"Show was already reviewed\",\n    \"cause\": null,\n    \"stack_trace\": [],\n    \"suppressed_exceptions\": []\n}"
 				}
 			]
 		}

@@ -6,4 +6,5 @@ interface ReviewsRepository {
     fun getReview(userId: String, showId: String): Review?
     fun getReviews(userId: String): List<Review>
     fun addReview(userId: String, showId: String, rating: Float)
+    fun undoReview(userId: String, showId: String)
 }
