@@ -1,5 +1,8 @@
 name: backend build and deployment
 
+env:
+  PIPELINE_ID: ${GITHUB_RUN_ID}-${GITHUB_RUN_NUMBER}
+
 on:
   push:
     branches: [ main ]
@@ -9,13 +12,23 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - name: Check out code
       uses: actions/checkout@v3
-    
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag shows-recomendations-backend:$(date +%s)
+    - name: Build the Docker image locally
+      run: docker build . --file Dockerfile --tag shows-recomendations-backend:${{ env.PIPELINE_ID }}
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
+    - name: Deploy to AWS Elastic BeansTalk 
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: shows-recommendations-backend
+        environment_name: shows-recommendations-backend-prod
+        version_label: ${{ env.PIPELINE_ID }}
+        region: us-west-2
+        deployment_package: deploy.zip
+
       
