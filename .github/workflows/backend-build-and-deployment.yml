@@ -16,8 +16,15 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v3
-    - name: Build the Docker image locally
-      run: docker build . --file Dockerfile --tag shows-recomendations-backend:${{ env.PIPELINE_ID }}
+#    - name: Build the Docker image locally
+#      run: docker build . --file Dockerfile --tag shows-recomendations-backend:${{ env.PIPELINE_ID }}
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
     - name: Deploy to AWS Elastic BeansTalk 
