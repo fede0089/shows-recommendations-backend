@@ -31,23 +31,23 @@ jobs:
     - name: Push the Docker image to Amazon ECR
       run: docker push --all-tags ${{ steps.login-ecr.outputs.registry }}/shows-recomendations-backend
 
-#  deploy:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    environment: prod
-#    steps:
-#    - name: Check out code
-#      uses: actions/checkout@v3
-#    - name: Generate deployment package
-#      run: zip -r deploy.zip . -x '*.git*'
-#    - name: Deploy to AWS Elastic BeansTalk 
-#      uses: einaregilsson/beanstalk-deploy@v20
-#      with:
-#        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#        application_name: shows-recommendations-backend
-#        environment_name: shows-recommendations-backend-prod
-#        version_label: ${{ env.PIPELINE_ID }}
-#        region: ${{ env.AWS_REGION }}
-#        use_existing_version_if_available: true
-#        deployment_package: deploy.zip
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    - name: Generate deployment package
+      run: zip deploy.zip Dockerrun.aws.json
+    - name: Deploy to AWS Elastic BeansTalk 
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: shows-recommendations-backend
+        environment_name: prod
+        version_label: ${{ env.PIPELINE_ID }}
+        region: ${{ env.AWS_REGION }}
+        use_existing_version_if_available: true
+        deployment_package: deploy.zip
