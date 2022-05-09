@@ -1,0 +1,11 @@
+{
+  "Image": {
+    "Name": "757783844609.dkr.ecr.us-east-1.amazonaws.com/shows-recomendations-backend:latest",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 8080
+    }
+  ]
+}
