@@ -37,5 +37,5 @@ jobs:
         application_name: shows-recommendations-backend
         environment_name: shows-recommendations-backend-prod
         version_label: ${{ env.PIPELINE_ID }}
-        region: us-west-2
+        region: ${{ env.AWS_REGION }}
         deployment_package: deploy.zip
