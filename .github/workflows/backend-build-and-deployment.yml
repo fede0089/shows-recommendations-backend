@@ -27,9 +27,9 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v3
     - name: Build the Docker image 
-      run: docker build . --file Dockerfile --tag ${{ steps.login-ecr.outputs.registry }}/shows-recomendations-backend:${{ env.PIPELINE_ID }} --tag ${{ steps.login-ecr.outputs.registry }}/shows-recomendations-backend:latest
+      run: docker build . --file Dockerfile --tag ${{ steps.login-ecr.outputs.registry }}/shows-recommendations-backend:${{ env.PIPELINE_ID }} --tag ${{ steps.login-ecr.outputs.registry }}/shows-recommendations-backend:latest
     - name: Push the Docker image to Amazon ECR
-      run: docker push --all-tags ${{ steps.login-ecr.outputs.registry }}/shows-recomendations-backend
+      run: docker push --all-tags ${{ steps.login-ecr.outputs.registry }}/shows-recommendations-backend
 
   deploy:
     needs: build
@@ -45,7 +45,7 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: shows-recomendations-backend
+        application_name: shows-recommendations-backend
         environment_name: prod
         version_label: ${{ env.PIPELINE_ID }}
         use_existing_version_if_available: true
