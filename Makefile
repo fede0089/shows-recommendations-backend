@@ -1,9 +1,9 @@
 APP=shows-recomendations-backend
 
-build-image: ## Build the container
+build-image: ## Build the image
 	docker build --no-cache -t ${APP} .
 
-run: ## Run container on port configured in `config.env`
+run: ## Run image, binding port 8080 of the container to port 8080 of the host machine
 	docker run -t -p=8080:8080 --name="${APP}" ${APP}
 
 up: build-image run
