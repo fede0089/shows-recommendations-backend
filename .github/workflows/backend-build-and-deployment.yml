@@ -45,7 +45,7 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: shows-recommendations-backend
+        application_name: shows-recomendations-backend
         environment_name: prod
         version_label: ${{ env.PIPELINE_ID }}
         use_existing_version_if_available: true
